@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   ScrollView,
+  Image,
   View
 } from 'react-native';
 
@@ -15,19 +16,27 @@ export default class ProposalBox extends Component<{}>{
   render(){
     return(
       <View style={styles.outer}>
-        <Text style={styles.category}>{this.props.name}</Text>
+        <View style={{height:30,marginBottom:2,flexDirection:'row',justifyContent:'space-between'}}>
+          <Text>{this.props.name}</Text>
+          <Image style={styles.button} source={require('../assets/preFollow.png')}/>
+        </View>
         <View style={styles.content}>
           <Text style={styles.title}>Overturn Net Neutrality</Text>
-          <Text style={styles.details}>View Details</Text>
         </View>
         <View style={{flex:1,flexDirection:'row',justifyContent:'space-between'}}>
           <View>
-            <Text style={{color:'teal'}}> UP 31% </Text>
+            <View style={{flexDirection:'row'}}>
+              <Image style={styles.button} source={require('../assets/preUpVote.jpg')}/>
+              <Text style={{color:'cornflowerblue'}}> 31% </Text>
+            </View>
             <Text style={styles.votes}> UpVoted by John Doe</Text>
             <Text style={styles.comments}> View 45 comments </Text>
           </View>
           <View>
-            <Text style={{color:'salmon'}}> DN 69% </Text>
+            <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
+              <Text style={{color:'salmon'}}>69% </Text>
+              <Image style={styles.button} source={require('../assets/preDownVote.png')}/>
+            </View>
             <Text style={styles.votes} >DownVoted by Sheila Grant</Text>
             <Text style={styles.comments}> View 14 comments </Text>
           </View>
@@ -39,6 +48,10 @@ export default class ProposalBox extends Component<{}>{
 }
 
 const styles = StyleSheet.create({
+  button:{
+    height:30,
+    width:30,
+  },
   comments:{
     color:'grey'
   },
@@ -46,15 +59,12 @@ const styles = StyleSheet.create({
     fontWeight:'bold'
   },
   outer:{
-    height:200,
+    height:190,
     borderBottomColor:'lightgray',
     borderBottomWidth:1
   },
-  category:{
-    marginBottom:5
-  },
   content:{
-    height:100,
+    height:80,
   },
   title:{
     height:50,
