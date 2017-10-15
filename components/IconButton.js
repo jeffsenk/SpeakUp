@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
-  Text,
-  ScrollView,
   Image,
-  View
+  TouchableHighlight,
 } from 'react-native';
 
 export default class IconButton extends Component<{}>{
@@ -15,7 +13,9 @@ export default class IconButton extends Component<{}>{
 
   render(){
     return(
-      <Image source={this.props.src}/>
+      <TouchableHighlight underlayColor="white" onPress={this.props.onPress}>
+        <Image style={{height:30,width:30}} source={this.props.source}/>
+      </TouchableHighlight>
     );
   }
 }

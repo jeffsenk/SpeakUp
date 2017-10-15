@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   Alert
 } from 'react-native';
+import IconButton from './IconButton';
 
 export default class ProposalBox extends Component<{}>{
   constructor(props){
@@ -33,7 +34,7 @@ export default class ProposalBox extends Component<{}>{
     if(this.state.upVote){
       this.setState({upVote:false});
     }else{
-      this.setState({upVote:true});
+      this.setState({upVote:true,downVote:false});
     }
   }
 
@@ -41,7 +42,7 @@ export default class ProposalBox extends Component<{}>{
     if(this.state.downVote){
       this.setState({downVote:false});
     }else{
-      this.setState({downVote:true});
+      this.setState({downVote:true,upVote:false});
     }
   }
 
@@ -52,21 +53,17 @@ export default class ProposalBox extends Component<{}>{
 
     return(
       <View style={styles.outer}>
-        <View style={{height:30,marginRight:10,marginBottom:2,flexDirection:'row',justifyContent:'space-between'}}>
+        <View style={styles.topRow}>
           <Text>{this.props.name}</Text>
-          <TouchableHighlight underlayColor="white" onPress={this.onPressFollow}>
-            <Image style={styles.button} source={followIcon}/>
-          </TouchableHighlight>
+          <IconButton onPress={this.onPressFollow} source={followIcon}/>
         </View>
-        <View style={styles.content}>
+        <TouchableHighlight underlayColor="white" onPress={this.props.selectProposal}>
           <Text style={styles.title}>Overturn Net Neutrality</Text>
-        </View>
-        <View style={{flex:1,flexDirection:'row',justifyContent:'space-between'}}>
+        </TouchableHighlight>
+        <View style={styles.stats}>
           <View>
             <View style={{flexDirection:'row'}}>
-              <TouchableHighlight underlayColor="white" onPress={this.onPressUpVote}>
-                <Image style={styles.button} source={upVoteIcon}/>
-              </TouchableHighlight>
+              <IconButton onPress={this.onPressUpVote} source={upVoteIcon}/>
               <Text style={{color:'cornflowerblue'}}> 31% </Text>
             </View>
             <Text style={styles.votes}> UpVoted by John Doe</Text>
@@ -75,9 +72,7 @@ export default class ProposalBox extends Component<{}>{
           <View style={{marginRight:10}}>
             <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
               <Text style={{color:'salmon'}}>69% </Text>
-              <TouchableHighlight underlayColor="white" onPress={this.onPressDownVote}>
-                <Image style={styles.button} source={downVoteIcon}/>
-              </TouchableHighlight>
+              <IconButton onPress={this.onPressDownVote} source={downVoteIcon}/>
             </View>
             <Text style={styles.votes} >DownVoted by Sheila Grant</Text>
             <Text style={styles.comments}> View 14 comments </Text>
@@ -90,6 +85,18 @@ export default class ProposalBox extends Component<{}>{
 }
 
 const styles = StyleSheet.create({
+  stats:{
+    flex:1,
+    flexDirection:'row',
+    justifyContent:'space-between'
+  },
+  topRow:{
+    height:30,
+    marginRight:10,
+    marginBottom:2,
+    flexDirection:'row',
+    justifyContent:'space-between'
+  },
   button:{
     height:30,
     width:30,
@@ -107,11 +114,8 @@ const styles = StyleSheet.create({
     borderBottomColor:'lightgray',
     borderBottomWidth:1
   },
-  content:{
-    height:80,
-  },
   title:{
-    height:50,
+    height:60,
     marginBottom:5,
     fontSize:25
   },
