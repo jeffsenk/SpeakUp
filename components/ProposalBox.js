@@ -16,7 +16,7 @@ export default class ProposalBox extends Component<{}>{
   render(){
     return(
       <View style={styles.outer}>
-        <View style={{height:30,marginBottom:2,flexDirection:'row',justifyContent:'space-between'}}>
+        <View style={{height:30,marginRight:10,marginBottom:2,flexDirection:'row',justifyContent:'space-between'}}>
           <Text>{this.props.name}</Text>
           <Image style={styles.button} source={require('../assets/preFollow.png')}/>
         </View>
@@ -32,7 +32,7 @@ export default class ProposalBox extends Component<{}>{
             <Text style={styles.votes}> UpVoted by John Doe</Text>
             <Text style={styles.comments}> View 45 comments </Text>
           </View>
-          <View>
+          <View style={{marginRight:10}}>
             <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
               <Text style={{color:'salmon'}}>69% </Text>
               <Image style={styles.button} source={require('../assets/preDownVote.png')}/>
@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
     fontWeight:'bold'
   },
   outer:{
+    marginTop:5,
+    marginLeft:10,
     height:190,
     borderBottomColor:'lightgray',
     borderBottomWidth:1

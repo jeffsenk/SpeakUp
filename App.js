@@ -9,10 +9,12 @@ import {
   Platform,
   StyleSheet,
   Text,
+  ScrollView,
   View
 } from 'react-native';
 import firebase from './fire';
 import LogInScreen from './components/LogInScreen';
+import MainScreen from './components/MainScreen';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -46,11 +48,7 @@ export default class App extends Component<{}> {
   render() {
     if(this.state.user.email){
       return(
-        <View>
-          <Text>
-            {this.state.user.email}
-          </Text>
-        </View>
+        <MainScreen/>
       );
     }
     return (
@@ -67,17 +65,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    borderColor:'green',
-    borderWidth:5,
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
