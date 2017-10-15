@@ -10,30 +10,35 @@ import {
 } from 'react-native';
 import ProposalBox from './ProposalBox';
 import DetailScreen from './DetailScreen';
+import CommentScreen from './CommentScreen';
 
 export default class MainScreen extends Component<{}>{
   constructor(props){
     super(props);
     this.state={
-      selectedProposal:{}
+      selectedProposal:{},
+      selectedComments:{}
     }
+    this.selectComments=this.selectComments.bind(this);
     this.selectProposal=this.selectProposal.bind(this);
-    this.deselectProposal=this.deselectProposal.bind(this);
+    this.resetSelections=this.resetSelections.bind(this);
+  }
+
+  selectComments(){
+    this.setState({selectedComments:{key:'abc123'},selectedProposal:{}});
   }
 
   selectProposal(){
-    this.setState({selectedProposal:{key:'abc123'}});
+    this.setState({selectedProposal:{key:'abc123'},selectedComments:{}});
   }
 
-  deselectProposal(){
-    this.setState({selectedProposal:{}});
+  resetSelections(){
+    this.setState({selectedProposal:{},selectedComments:{}});
   }
 
   componentDidMount(){
     BackHandler.addEventListener('hardwareBackPress',function(){
-      if(this.state.selectedProposal.key){
-        this.deselectProposal();
-      }
+      this.resetSelections();
       return true;
     }.bind(this));
   }
@@ -42,9 +47,15 @@ export default class MainScreen extends Component<{}>{
     var returnIcon = require('../assets/returnArrow.png');
     if(this.state.selectedProposal.key){
       return(
-        <DetailScreen returnIcon={returnIcon} deselectProposal={this.deselectProposal}/>
+        <DetailScreen returnIcon={returnIcon} deselectProposal={this.resetSelections}/>
       );
     }
+    if(this.state.selectedComments.key){
+      return(
+       <CommentScreen returnIcon={returnIcon} deselectComments={this.resetSelections}/>
+      );
+    }
+
     return(
       <View style={styles.main}>
         <FlatList data={[
@@ -57,7 +68,7 @@ export default class MainScreen extends Component<{}>{
             {key: 'Jimmy'},
             {key: 'Julie'},
           ]}
-          renderItem={({item})=> <ProposalBox name={item.key} selectProposal={this.selectProposal}/> }/>
+          renderItem={({item})=> <ProposalBox name={item.key} selectComments={this.selectComments} selectProposal={this.selectProposal}/> }/>
       </View>
     );
   }

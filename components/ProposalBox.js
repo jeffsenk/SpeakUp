@@ -67,7 +67,9 @@ export default class ProposalBox extends Component<{}>{
               <Text style={{color:'cornflowerblue'}}> 31% </Text>
             </View>
             <Text style={styles.votes}> UpVoted by John Doe</Text>
-            <Text style={styles.comments}> View 45 comments </Text>
+            <TouchableHighlight underlayColor="white" onPress={this.props.selectComments}>
+              <Text style={styles.comments}> View 45 comments </Text>
+            </TouchableHighlight>
           </View>
           <View style={{marginRight:10}}>
             <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
@@ -75,7 +77,9 @@ export default class ProposalBox extends Component<{}>{
               <IconButton onPress={this.onPressDownVote} source={downVoteIcon}/>
             </View>
             <Text style={styles.votes} >DownVoted by Sheila Grant</Text>
-            <Text style={styles.comments}> View 14 comments </Text>
+            <TouchableHighlight underlayColor="white" onPress={this.props.selectComments}>
+              <Text style={styles.comments}> View 14 comments </Text>
+            </TouchableHighlight>
           </View>
         </View>
       </View>
