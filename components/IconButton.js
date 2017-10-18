@@ -14,7 +14,7 @@ export default class IconButton extends Component<{}>{
   render(){
     return(
       <TouchableHighlight underlayColor="white" onPress={this.props.onPress}>
-        <Image style={{height:30,width:30}} source={this.props.source}/>
+        <Image style={{height:30,width:35}} source={this.props.source}/>
       </TouchableHighlight>
     );
   }
