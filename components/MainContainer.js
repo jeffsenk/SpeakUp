@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {
   Platform,
-  StyleSheet,
-  Text,
-  View
+  View,
+  Text
 } from 'react-native';
 import MainScreen from './MainScreen';
 

@@ -24,9 +24,7 @@ export default class DetailScreen extends Component<{}>{
           <Text style={{fontSize:20,fontWeight:'bold',marginLeft:20}}> Details </Text>
         </View>
         <View style={styles.detail}>
-          <Text>
-            The FCC voted 2-1, along political party lines Thursday, to begin a rule-making process to replace the Open Internet order, or net neutrality rules, adopted in 2015 by the agency, then headed by Chairman Tom Wheeler, a Democrat.
-          </Text>
+          <Text>{this.props.proposal.val().Description}</Text>
         </View>
       </View>
     );

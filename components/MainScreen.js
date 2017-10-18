@@ -28,8 +28,8 @@ export default class MainScreen extends Component<{}>{
     this.setState({selectedComments:{key:'abc123'},selectedProposal:{}});
   }
 
-  selectProposal(){
-    this.setState({selectedProposal:{key:'abc123'},selectedComments:{}});
+  selectProposal(proposal){
+    this.setState({selectedProposal:proposal,selectedComments:{}});
   }
 
   resetSelections(){
@@ -47,7 +47,7 @@ export default class MainScreen extends Component<{}>{
     var returnIcon = require('../assets/outlineReturn.png');
     if(this.state.selectedProposal.key){
       return(
-        <DetailScreen returnIcon={returnIcon} deselectProposal={this.resetSelections}/>
+        <DetailScreen proposal={this.state.selectedProposal} returnIcon={returnIcon} deselectProposal={this.resetSelections}/>
       );
     }
     if(this.state.selectedComments.key){
@@ -59,8 +59,8 @@ export default class MainScreen extends Component<{}>{
     return(
       <View style={styles.main}>
         <View style={{height:50,borderBottomWidth:1,borderBottomColor:'lightgray'}}></View>
-          <FlatList data={this.props.proposals}
-          renderItem={({item})=> <ProposalBox name={item.key} selectComments={this.selectComments} selectProposal={this.selectProposal}/> }/>
+          <FlatList data={this.props.proposals} renderItem={({item})=> <ProposalBox proposal={item} name={item.key}
+           selectComments={this.selectComments} selectProposal={this.selectProposal}/> }/>
         <View style={{height:50,borderTopWidth:1,borderTopColor:'lightgray'}}></View>
       </View>
     );

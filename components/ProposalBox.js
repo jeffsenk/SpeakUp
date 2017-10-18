@@ -20,6 +20,7 @@ export default class ProposalBox extends Component<{}>{
     this.onPressFollow = this.onPressFollow.bind(this);
     this.onPressUpVote = this.onPressUpVote.bind(this);
     this.onPressDownVote = this.onPressDownVote.bind(this);
+    this.onSelectProposal = this.onSelectProposal.bind(this);
   }
 
   onPressFollow(){
@@ -46,25 +47,39 @@ export default class ProposalBox extends Component<{}>{
     }
   }
 
+  onSelectProposal(){
+    this.props.selectProposal(this.props.proposal);
+  }
+
   render(){
     var followIcon = this.state.following ? require('../assets/postFollow.png') : require('../assets/preFollow.png');
     var upVoteIcon = this.state.upVote ? require('../assets/postUpVote.jpg') : require('../assets/preUpVote.jpg');
     var downVoteIcon = this.state.downVote ? require('../assets/postDownVote.png') : require('../assets/preDownVote.png');
 
+    var total = this.props.proposal.val().VotesPro + this.props.proposal.val().VotesCon;
+    var pro =0;
+    var con =0;
+    if(total>0){
+     var pro= ((this.props.proposal.val().VotesPro/total)*100).toFixed(0);
+     var con= ((this.props.proposal.val().VotesCon/total)*100).toFixed(0);
+    }
+    const proPer = pro;
+    const conPer = con;
+
     return(
       <View style={styles.outer}>
         <View style={styles.topRow}>
-          <Text>{this.props.name}</Text>
+          <Text>{this.props.proposal.val().Category} - {this.props.proposal.val().GroupName}</Text>
           <IconButton onPress={this.onPressFollow} source={followIcon}/>
         </View>
-        <TouchableHighlight underlayColor="white" onPress={this.props.selectProposal}>
-          <Text style={styles.title}>Overturn Net Neutrality</Text>
+        <TouchableHighlight underlayColor="white" onPress={this.onSelectProposal}>
+          <Text style={styles.title}>{this.props.proposal.val().Name}</Text>
         </TouchableHighlight>
         <View style={styles.stats}>
           <View>
             <View style={{marginBottom:5,flexDirection:'row'}}>
               <IconButton onPress={this.onPressUpVote} source={upVoteIcon}/>
-              <Text style={{color:'cornflowerblue'}}> 31% </Text>
+              <Text style={{color:'cornflowerblue'}}>{proPer}% </Text>
             </View>
             <Text style={styles.votes}> UpVoted by John Doe</Text>
             <TouchableHighlight underlayColor="white" onPress={this.props.selectComments}>
@@ -73,7 +88,7 @@ export default class ProposalBox extends Component<{}>{
           </View>
           <View style={{marginRight:10}}>
             <View style={{marginBottom:5,flexDirection:'row',justifyContent:'flex-end'}}>
-              <Text style={{color:'salmon'}}>69% </Text>
+              <Text style={{color:'salmon'}}>{conPer}% </Text>
               <IconButton onPress={this.onPressDownVote} source={downVoteIcon}/>
             </View>
             <Text style={styles.votes} >DownVoted by Sheila Grant</Text>
