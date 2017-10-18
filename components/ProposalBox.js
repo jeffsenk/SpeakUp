@@ -62,7 +62,7 @@ export default class ProposalBox extends Component<{}>{
         </TouchableHighlight>
         <View style={styles.stats}>
           <View>
-            <View style={{flexDirection:'row'}}>
+            <View style={{marginBottom:5,flexDirection:'row'}}>
               <IconButton onPress={this.onPressUpVote} source={upVoteIcon}/>
               <Text style={{color:'cornflowerblue'}}> 31% </Text>
             </View>
@@ -72,7 +72,7 @@ export default class ProposalBox extends Component<{}>{
             </TouchableHighlight>
           </View>
           <View style={{marginRight:10}}>
-            <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
+            <View style={{marginBottom:5,flexDirection:'row',justifyContent:'flex-end'}}>
               <Text style={{color:'salmon'}}>69% </Text>
               <IconButton onPress={this.onPressDownVote} source={downVoteIcon}/>
             </View>
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     color:'grey'
   },
   votes:{
+    marginBottom:5,
     fontWeight:'bold'
   },
   outer:{
@@ -122,8 +123,5 @@ const styles = StyleSheet.create({
     height:60,
     marginBottom:5,
     fontSize:25
-  },
-  details:{
-    marginBottom:5
   }
 });

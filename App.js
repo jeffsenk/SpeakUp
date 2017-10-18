@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import firebase from './fire';
 import LogInScreen from './components/LogInScreen';
-import MainScreen from './components/MainScreen';
+import MainContainer from './components/MainContainer';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -48,7 +48,7 @@ export default class App extends Component<{}> {
   render() {
     if(this.state.user.email){
       return(
-        <MainScreen/>
+        <MainContainer firebase={firebase}/>
       );
     }
     return (

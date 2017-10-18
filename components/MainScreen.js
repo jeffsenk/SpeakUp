@@ -44,7 +44,7 @@ export default class MainScreen extends Component<{}>{
   }
 
   render(){
-    var returnIcon = require('../assets/returnArrow.png');
+    var returnIcon = require('../assets/outlineReturn.png');
     if(this.state.selectedProposal.key){
       return(
         <DetailScreen returnIcon={returnIcon} deselectProposal={this.resetSelections}/>
@@ -58,17 +58,10 @@ export default class MainScreen extends Component<{}>{
 
     return(
       <View style={styles.main}>
-        <FlatList data={[
-            {key: 'Devin'},
-            {key: 'Jackson'},
-            {key: 'James'},
-            {key: 'Joel'},
-            {key: 'John'},
-            {key: 'Jillian'},
-            {key: 'Jimmy'},
-            {key: 'Julie'},
-          ]}
+        <View style={{height:50,borderBottomWidth:1,borderBottomColor:'lightgray'}}></View>
+          <FlatList data={this.props.proposals}
           renderItem={({item})=> <ProposalBox name={item.key} selectComments={this.selectComments} selectProposal={this.selectProposal}/> }/>
+        <View style={{height:50,borderTopWidth:1,borderTopColor:'lightgray'}}></View>
       </View>
     );
   }
