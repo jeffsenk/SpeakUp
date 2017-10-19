@@ -27,7 +27,8 @@ export default class App extends Component<{}> {
   constructor(props){
     super(props);
     this.state={
-      user: {}
+      authUser: {},
+      dbUser:{}
     }
   }
 
@@ -35,20 +36,26 @@ export default class App extends Component<{}> {
     firebase.auth().onAuthStateChanged(function(currentUser) {
       if(currentUser){
         this.setState({
-          user: currentUser
+          authUser: currentUser
         });
+        let database = firebase.database();
+        let userRef = database.ref('Users/'+currentUser.uid);
+        userRef.on('value',function(snapShot){
+          this.setState({dbUser:snapShot});
+        }.bind(this));
       }else{
         this.setState({
-          user: {}
+          authUser: {},
+          dbUser:{}
         });
       }
     }.bind(this));
   }
 
   render() {
-    if(this.state.user.email){
+    if(this.state.dbUser.key){
       return(
-        <MainContainer firebase={firebase}/>
+        <MainContainer user={this.state.dbUser} firebase={firebase}/>
       );
     }
     return (
