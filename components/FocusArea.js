@@ -31,7 +31,7 @@ export default class FocusArea extends Component<{}>{
       );
     }
     return(
-      <FeedScreen resetSelections={this.props.resetSelections} selectProposal={this.props.selectProposal} selectComments={this.props.selectComments} selectedProposal={this.props.selectedProposal} selectedComments={this.props.selectedComments} proposals={this.props.proposals} followingKeys={this.props.followingKeys}/>
+      <FeedScreen userVotes={this.props.userVotes} firebase={this.props.firebase} resetSelections={this.props.resetSelections} selectProposal={this.props.selectProposal} selectComments={this.props.selectComments} selectedProposal={this.props.selectedProposal} selectedComments={this.props.selectedComments} proposals={this.props.proposals} user={this.props.user}/>
     );
   }
 }

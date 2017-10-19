@@ -10,12 +10,15 @@ export default class MainContainer extends Component<{}>{
   constructor(props){
     super(props);
     this.state={
-      proposals:[]
+      proposals:[],
+      userVotes:[]
     }
+    this.fetchProposals = this.fetchProposals.bind(this);
+    this.fetchUserVotes = this.fetchUserVotes.bind(this);
   }
 
-  componentDidMount(){
-    let database = this.props.firebase.database();
+
+  fetchProposals(database){
     let proposals = database.ref('Proposals');
     proposals.on('value',function(snapshot){
       snapshot.forEach(function(child){
@@ -38,10 +41,42 @@ export default class MainContainer extends Component<{}>{
     }.bind(this));
   }
 
+  fetchUserVotes(database,props){
+    for(key in props.user.val().Votes){
+      let voteRef = database.ref('Votes/'+key);
+      voteRef.on('value',function(snapShot){
+        var match=false;
+        for(var i =0;i<this.state.userVotes.length;i++){
+          if(this.state.userVotes[i].key == snapShot.key){
+            match = true;
+            break;
+          }
+        }
+        if(!match){
+console.log(snapShot.key);
+          let newState = this.state.userVotes;
+          newState.push(snapShot);
+          this.setState({userVotes:newState});
+        }
+      }.bind(this));
+    }
+  }
+
+  componentDidMount(){
+    let database = this.props.firebase.database();
+    this.fetchProposals(database);
+    this.fetchUserVotes(database,this.props);
+  }
+
+  componentWillReceiveProps(nextProps){
+    let database = this.props.firebase.database();
+    this.fetchUserVotes(database,nextProps);
+  }
+
   render(){
     if(this.state.proposals.length>0){
       return(
-        <MainScreen followingKeys={this.props.user.val().Following} proposals={this.state.proposals}/>
+        <MainScreen userVotes={this.state.userVotes} firebase={this.props.firebase} user={this.props.user} proposals={this.state.proposals}/>
       );
     }
     return(

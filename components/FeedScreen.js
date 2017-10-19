@@ -8,13 +8,17 @@ import {
 } from 'react-native';
 
 import IconButton from './IconButton';
-import ProposalBox from './ProposalBox';
+import ProposalContainer from './ProposalContainer';
 import DetailScreen from './DetailScreen';
 import CommentScreen from './CommentScreen';
 
 export default class FeedScreen extends Component<{}>{
   constructor(props){
     super(props);
+  }
+
+  componentWillReceiveProps(){
+    console.log('feed screen new props');
   }
 
   render(){
@@ -32,13 +36,12 @@ export default class FeedScreen extends Component<{}>{
       );
     }
     return(
-      <View>
+      <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
           <Text style={{marginLeft:150,fontSize:20,color:'lightgray'}}>Search... </Text>
           <IconButton  source={searchIcon}/>
         </View>
-        <FlatList data={this.props.proposals} renderItem={({item})=> <ProposalBox followingKeys={this.props.followingKeys}
-           proposal={item} name={item.key}
+        <FlatList data={this.props.proposals} renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} firebase={this.props.firebase} user={this.props.user} proposal={item} name={item.key}
            selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
       </View>
     );

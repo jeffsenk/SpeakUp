@@ -54,17 +54,12 @@ export default class ProposalBox extends Component<{}>{
   }
 
   componentDidMount(){
-    for(var key in this.props.followingKeys){
-      if(this.props.proposal.key == key){
-        this.setState({following:true});
-      }
-    }
   }
 
   render(){
-    var followIcon = this.state.following ? require('../assets/postFollow.png') : require('../assets/preFollow.png');
-    var upVoteIcon = this.state.upVote ? require('../assets/postUpVote.jpg') : require('../assets/preUpVote.jpg');
-    var downVoteIcon = this.state.downVote ? require('../assets/postDownVote.png') : require('../assets/preDownVote.png');
+    var followIcon = this.props.following ? require('../assets/postFollow.png') : require('../assets/preFollow.png');
+    var upVoteIcon = this.props.upVote ? require('../assets/postUpVote.jpg') : require('../assets/preUpVote.jpg');
+    var downVoteIcon = this.props.downVote ? require('../assets/postDownVote.png') : require('../assets/preDownVote.png');
 
     var total = this.props.proposal.val().VotesPro + this.props.proposal.val().VotesCon;
     var pro =0;
@@ -88,7 +83,7 @@ export default class ProposalBox extends Component<{}>{
         <View style={styles.stats}>
           <View>
             <View style={{marginBottom:5,flexDirection:'row'}}>
-              <IconButton onPress={this.onPressUpVote} source={upVoteIcon}/>
+              <IconButton onPress={this.props.onPressUpVote} source={upVoteIcon}/>
               <Text style={{color:'cornflowerblue'}}>{proPer}% </Text>
             </View>
             <Text style={styles.votes}> UpVoted by John Doe</Text>
@@ -99,7 +94,7 @@ export default class ProposalBox extends Component<{}>{
           <View style={{marginRight:10}}>
             <View style={{marginBottom:5,flexDirection:'row',justifyContent:'flex-end'}}>
               <Text style={{color:'salmon'}}>{conPer}% </Text>
-              <IconButton onPress={this.onPressDownVote} source={downVoteIcon}/>
+              <IconButton onPress={this.props.onPressDownVote} source={downVoteIcon}/>
             </View>
             <Text style={styles.votes} >DownVoted by Sheila Grant</Text>
             <TouchableHighlight underlayColor="white" onPress={this.props.selectComments}>

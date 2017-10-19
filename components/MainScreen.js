@@ -59,7 +59,7 @@ export default class MainScreen extends Component<{}>{
   render(){
     return(
       <View style={styles.main}>
-        <FocusArea resetSelections={this.resetSelections} selectProposal={this.selectProposal} selectComments={this.selectComments} selectedProposal={this.state.selectedProposal} selectedComments={this.state.selectedComments} followingScreen={this.state.followingScreen} categoryScreen={this.state.categoryScreen} followingKeys={this.props.followingKeys} proposals={this.props.proposals}/>
+        <FocusArea userVotes={this.props.userVotes} firebase={this.props.firebase} resetSelections={this.resetSelections} selectProposal={this.selectProposal} selectComments={this.selectComments} selectedProposal={this.state.selectedProposal} selectedComments={this.state.selectedComments} followingScreen={this.state.followingScreen} categoryScreen={this.state.categoryScreen} user={this.props.user} proposals={this.props.proposals}/>
         <NavBar homePress={this.resetSelections} followingPress={this.selectFollowingScreen} categoryPress={this.selectCategoryScreen} />
       </View>
     );
