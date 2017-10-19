@@ -104,7 +104,8 @@ export default class MainScreen extends Component<{}>{
           <Text style={{marginLeft:150,fontSize:20,color:'lightgray'}}>Search... </Text>
           <IconButton  source={searchIcon}/>
         </View>
-        <FlatList data={this.props.proposals} renderItem={({item})=> <ProposalBox proposal={item} name={item.key}
+        <FlatList data={this.props.proposals} renderItem={({item})=> <ProposalBox followingKeys={this.props.followingKeys}
+           proposal={item} name={item.key}
            selectComments={this.selectComments} selectProposal={this.selectProposal}/> }/>
         <NavBar homePress={this.resetSelections} followingPress={this.selectFollowingScreen} categoryPress={this.selectCategoryScreen} />
       </View>

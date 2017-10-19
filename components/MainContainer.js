@@ -41,7 +41,7 @@ export default class MainContainer extends Component<{}>{
   render(){
     if(this.state.proposals.length>0){
       return(
-        <MainScreen proposals={this.state.proposals}/>
+        <MainScreen followingKeys={this.props.user.val().Following} proposals={this.state.proposals}/>
       );
     }
     return(

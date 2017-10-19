@@ -16,6 +16,8 @@ export default class ProposalBox extends Component<{}>{
     super(props);
     this.state={
       following:false,
+      upVote:false,
+      downVote:false
     }
     this.onPressFollow = this.onPressFollow.bind(this);
     this.onPressUpVote = this.onPressUpVote.bind(this);
@@ -49,6 +51,14 @@ export default class ProposalBox extends Component<{}>{
 
   onSelectProposal(){
     this.props.selectProposal(this.props.proposal);
+  }
+
+  componentDidMount(){
+    for(var key in this.props.followingKeys){
+      if(this.props.proposal.key == key){
+        this.setState({following:true});
+      }
+    }
   }
 
   render(){
