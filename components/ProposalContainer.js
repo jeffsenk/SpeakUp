@@ -21,10 +21,17 @@ export default class ProposalContainer extends Component<{}>{
     this.compareVotes = this.compareVotes.bind(this);
     this.onPressUpVote = this.onPressUpVote.bind(this);
     this.onPressDownVote = this.onPressDownVote.bind(this);
+    this.onPressFollowing = this.onPressFollowing.bind(this);
+  }
+
+  onPressFollowing(){
+    if(!this.state.following){
+      this.props.firebase.database().ref('Users/'+this.props.user.key+'/Following/'+this.props.proposal.key).set('true');
+    }
   }
 
   onPressUpVote(){
-    if(this.state.upVote == false && this.state.downVote == false){
+    if(!this.state.upVote && !this.state.downVote){
       let newKey = this.props.firebase.database().ref('Votes/').push({
         Proposal:this.props.proposal.key,
         User:this.props.user.key,
@@ -49,9 +56,9 @@ export default class ProposalContainer extends Component<{}>{
     }
   }
 
-  compareFollowing(){
-    for(key in this.props.user.val().Following){
-      if(key == this.props.proposal.key){
+  compareFollowing(props){
+    for(key in props.user.val().Following){
+      if(key == props.proposal.key){
         this.setState({following:true});
       }
     }
@@ -71,12 +78,13 @@ export default class ProposalContainer extends Component<{}>{
 
   componentDidMount(){
     console.log('proposal container mounted');
-    this.compareFollowing();
+    this.compareFollowing(this.props);
     this.compareVotes(this.props);
   }
 
   componentWillReceiveProps(nextProps){
     console.log('new props in Proposal Container');
+    this.compareFollowing(nextProps);
     this.compareVotes(nextProps);
   }
 
@@ -84,7 +92,8 @@ export default class ProposalContainer extends Component<{}>{
     return(
       <ProposalBox following={this.state.following} upVote={this.state.upVote} downVote={this.state.downVote}
       user={this.props.user} proposal={this.props.proposal} name={this.props.name} selectComments={this.props.selectComments}
-      selectProposal={this.props.selectProposal} onPressUpVote={this.onPressUpVote} onPressDownVote={this.onPressDownVote}/>
+      selectProposal={this.props.selectProposal} onPressUpVote={this.onPressUpVote} onPressDownVote={this.onPressDownVote}
+      onPressFollowing={this.onPressFollowing}/>
     );
   }
 

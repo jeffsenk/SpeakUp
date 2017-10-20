@@ -16,13 +16,15 @@ export default class FeedScreen extends Component<{}>{
   constructor(props){
     super(props);
     this.state={
-      userVotes:[]
+      userVotes:[],
+      following:{}
     }
   }
 
   componentWillReceiveProps(nextProps){
     console.log('feed screen new props');
     this.setState({userVotes:nextProps.userVotes});
+    this.setState({following:nextProps.user.val().Following});
   }
 
   render(){

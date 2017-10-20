@@ -14,46 +14,11 @@ import IconButton from './IconButton';
 export default class ProposalBox extends Component<{}>{
   constructor(props){
     super(props);
-    this.state={
-      following:false,
-      upVote:false,
-      downVote:false
-    }
-    this.onPressFollow = this.onPressFollow.bind(this);
-    this.onPressUpVote = this.onPressUpVote.bind(this);
-    this.onPressDownVote = this.onPressDownVote.bind(this);
     this.onSelectProposal = this.onSelectProposal.bind(this);
-  }
-
-  onPressFollow(){
-    if(this.state.following){
-      this.setState({following:false});
-    }else{
-      this.setState({following:true});
-    }
-  }
-
-  onPressUpVote(){
-    if(this.state.upVote){
-      this.setState({upVote:false});
-    }else{
-      this.setState({upVote:true,downVote:false});
-    }
-  }
-
-  onPressDownVote(){
-    if(this.state.downVote){
-      this.setState({downVote:false});
-    }else{
-      this.setState({downVote:true,upVote:false});
-    }
   }
 
   onSelectProposal(){
     this.props.selectProposal(this.props.proposal);
-  }
-
-  componentDidMount(){
   }
 
   render(){
@@ -75,7 +40,7 @@ export default class ProposalBox extends Component<{}>{
       <View style={styles.outer}>
         <View style={styles.topRow}>
           <Text>{this.props.proposal.val().Category} - {this.props.proposal.val().GroupName}</Text>
-          <IconButton onPress={this.onPressFollow} source={followIcon}/>
+          <IconButton onPress={this.props.onPressFollowing} source={followIcon}/>
         </View>
         <TouchableHighlight underlayColor="white" onPress={this.onSelectProposal}>
           <Text style={styles.title}>{this.props.proposal.val().Name}</Text>
