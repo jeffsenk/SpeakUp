@@ -38,7 +38,8 @@ export default class LogInBox extends Component<{}> {
 
   render(){
     return (
-      <View>
+      <View style={{alignItems:'center'}}>
+        <Text style={styles.title} >SpeakUp</Text>
         <TextInput style={styles.input} value={this.state.email} onChangeText={(text)=>this.setState({email:text})} placeholder="Email"/>
         <TextInput style={styles.input} value={this.state.password} onChangeText={(text)=>this.setState({password:text})} placeholder="Password"/>
         <Button onPress={this.toggleSignIn} title="Sign In"/>
@@ -50,5 +51,9 @@ export default class LogInBox extends Component<{}> {
 const styles = StyleSheet.create({
   input:{
     width:200
+  },
+  title:{
+    fontSize:40,
+    marginBottom:50
   }
 });

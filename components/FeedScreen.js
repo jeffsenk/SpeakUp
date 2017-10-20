@@ -24,7 +24,7 @@ export default class FeedScreen extends Component<{}>{
   componentWillReceiveProps(nextProps){
     console.log('feed screen new props');
     this.setState({userVotes:nextProps.userVotes});
-    this.setState({following:nextProps.user.val().Following});
+    this.setState({following:nextProps.userFollowing});
   }
 
   render(){
@@ -48,8 +48,8 @@ export default class FeedScreen extends Component<{}>{
           <IconButton  source={searchIcon}/>
         </View>
         <FlatList extraData={this.state} data={this.props.proposals}
-         renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} firebase={this.props.firebase}
-         user={this.props.user} proposal={item} name={item.key}
+         renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} database={this.props.database}
+         userKey={this.props.userKey} proposal={item} userFollowing={this.props.userFollowing}
          selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
       </View>
     );

@@ -26,20 +26,21 @@ export default class ProposalContainer extends Component<{}>{
 
   onPressFollowing(){
     if(!this.state.following){
-      this.props.firebase.database().ref('Users/'+this.props.user.key+'/Following/'+this.props.proposal.key).set('true');
+      this.props.database.ref('Users/'+this.props.userKey+'/Following/'+this.props.proposal.key).set('true');
     }else{
-      this.props.firebase.database().ref('Users/'+this.props.user.key+'/Following/'+this.props.proposal.key).remove();
+      this.props.database.ref('Users/'+this.props.userKey+'/Following/'+this.props.proposal.key).remove();
     }
   }
 
   onPressUpVote(){
     if(!this.state.upVote && !this.state.downVote){
-      let newKey = this.props.firebase.database().ref('Votes/').push({
+      let newKey = this.props.database.ref('Votes/').push({
         Proposal:this.props.proposal.key,
-        User:this.props.user.key,
+        User:this.props.userKey,
         UpVote:true
       }).key;
-      this.props.firebase.database().ref('Users/'+this.props.user.key+'/Votes/'+newKey).set('true');
+      this.props.database.ref('Users/'+this.props.userKey+'/Votes/'+newKey).set('true');
+      this.props.database.ref('Proposals/'+this.props.proposal.key+'/UpVotes/'+newKey).set('true');
     }else{
       Alert.alert('Vote has already been submitted');
     }
@@ -47,12 +48,13 @@ export default class ProposalContainer extends Component<{}>{
 
   onPressDownVote(){
     if(!this.state.upVote && !this.state.downVote){
-      let newKey = this.props.firebase.database().ref('Votes/').push({
+      let newKey = this.props.database.ref('Votes/').push({
         Proposal:this.props.proposal.key,
-        User:this.props.user.key,
+        User:this.props.userKey,
         UpVote:false
       }).key;
-      this.props.firebase.database().ref('Users/'+this.props.user.key+'/Votes/'+newKey).set('true');
+      this.props.database.ref('Users/'+this.props.userKey+'/Votes/'+newKey).set('true');
+      this.props.database.ref('Proposals/'+this.props.proposal.key+'/DownVotes/'+newKey).set('true');
     }else{
       Alert.alert('Vote has already been submitted');
     }
@@ -60,7 +62,7 @@ export default class ProposalContainer extends Component<{}>{
 
   compareFollowing(props){
     var match = false;
-    for(key in props.user.val().Following){
+    for(key in props.userFollowing){
       if(key == props.proposal.key){
         match = true;
         this.setState({following:true});
@@ -98,7 +100,7 @@ export default class ProposalContainer extends Component<{}>{
   render(){
     return(
       <ProposalBox following={this.state.following} upVote={this.state.upVote} downVote={this.state.downVote}
-      user={this.props.user} proposal={this.props.proposal} name={this.props.name} selectComments={this.props.selectComments}
+      proposal={this.props.proposal} selectComments={this.props.selectComments}
       selectProposal={this.props.selectProposal} onPressUpVote={this.onPressUpVote} onPressDownVote={this.onPressDownVote}
       onPressFollowing={this.onPressFollowing}/>
     );

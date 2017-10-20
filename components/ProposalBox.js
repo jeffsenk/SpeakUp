@@ -3,7 +3,6 @@ import {
   Platform,
   StyleSheet,
   Text,
-  ScrollView,
   Image,
   View,
   TouchableHighlight,
@@ -23,7 +22,7 @@ export default class ProposalBox extends Component<{}>{
 
   render(){
     var followIcon = this.props.following ? require('../assets/postFollow.png') : require('../assets/preFollow.png');
-    var upVoteIcon = this.props.upVote ? require('../assets/postUpVote.jpg') : require('../assets/preUpVote.jpg');
+    var upVoteIcon = this.props.upVote ? require('../assets/postUpVote.png') : require('../assets/preUpVote.jpg');
     var downVoteIcon = this.props.downVote ? require('../assets/postDownVote.png') : require('../assets/preDownVote.png');
 
     var total = this.props.proposal.val().VotesPro + this.props.proposal.val().VotesCon;

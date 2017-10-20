@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Platform,
   View,
+  Image,
   Text
 } from 'react-native';
 import MainScreen from './MainScreen';
@@ -65,21 +66,24 @@ export default class MainContainer extends Component<{}>{
   }
 
   componentDidMount(){
-    let database = this.props.firebase.database();
-    this.fetchProposals(database);
-    this.fetchUserVotes(database);
-    this.listenForVote(database);
+    this.fetchProposals(this.props.database);
+    this.fetchUserVotes(this.props.database);
+    this.listenForVote(this.props.database);
   }
 
   render(){
     if(this.state.proposals.length>0){
       return(
-        <MainScreen userVotes={this.state.userVotes} firebase={this.props.firebase} user={this.props.user} proposals={this.state.proposals}/>
+        <MainScreen userFollowing={this.props.user.val().Following} userVotes={this.state.userVotes}
+         database={this.props.database} userKey={this.props.user.key} proposals={this.state.proposals}/>
       );
     }
+
+    var megaphoneIcon = require('../assets/megaphoneIcon.png');
+
     return(
-      <View>
-       <Text>Loading</Text>
+      <View style={{flex:1,justifyContent:'center', alignItems:'center'}}>
+       <Image style={{height:100,width:100}} source={megaphoneIcon}/>
       </View>
     );
   }
