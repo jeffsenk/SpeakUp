@@ -15,10 +15,14 @@ import CommentScreen from './CommentScreen';
 export default class FeedScreen extends Component<{}>{
   constructor(props){
     super(props);
+    this.state={
+      userVotes:[]
+    }
   }
 
-  componentWillReceiveProps(){
+  componentWillReceiveProps(nextProps){
     console.log('feed screen new props');
+    this.setState({userVotes:nextProps.userVotes});
   }
 
   render(){
@@ -41,8 +45,10 @@ export default class FeedScreen extends Component<{}>{
           <Text style={{marginLeft:150,fontSize:20,color:'lightgray'}}>Search... </Text>
           <IconButton  source={searchIcon}/>
         </View>
-        <FlatList data={this.props.proposals} renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} firebase={this.props.firebase} user={this.props.user} proposal={item} name={item.key}
-           selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
+        <FlatList extraData={this.state} data={this.props.proposals}
+         renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} firebase={this.props.firebase}
+         user={this.props.user} proposal={item} name={item.key}
+         selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
       </View>
     );
   }

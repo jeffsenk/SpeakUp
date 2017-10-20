@@ -15,6 +15,7 @@ export default class MainContainer extends Component<{}>{
     }
     this.fetchProposals = this.fetchProposals.bind(this);
     this.fetchUserVotes = this.fetchUserVotes.bind(this);
+    this.listenForVote = this.listenForVote.bind(this);
   }
 
 
@@ -41,36 +42,33 @@ export default class MainContainer extends Component<{}>{
     }.bind(this));
   }
 
-  fetchUserVotes(database,props){
-    for(key in props.user.val().Votes){
+  fetchUserVotes(database){
+    for(key in this.props.user.val().Votes){
       let voteRef = database.ref('Votes/'+key);
-      voteRef.on('value',function(snapShot){
-        var match=false;
-        for(var i =0;i<this.state.userVotes.length;i++){
-          if(this.state.userVotes[i].key == snapShot.key){
-            match = true;
-            break;
-          }
-        }
-        if(!match){
-console.log(snapShot.key);
-          let newState = this.state.userVotes;
-          newState.push(snapShot);
-          this.setState({userVotes:newState});
-        }
+      voteRef.once('value').then(function(snapShot){
+        let newState = this.state.userVotes;
+        newState.push(snapShot);
+        this.setState({userVotes:newState});
       }.bind(this));
     }
+  }
+
+  listenForVote(database){
+    let userVotesRef = database.ref('Users/'+this.props.user.key+'/Votes');
+    userVotesRef.on('child_added',function(data){
+      database.ref('Votes/'+data.key).once('value').then(function(snapShot){
+        let newState = this.state.userVotes;
+        newState.push(snapShot);
+        this.setState({userVotes:newState});
+      }.bind(this));
+    }.bind(this));
   }
 
   componentDidMount(){
     let database = this.props.firebase.database();
     this.fetchProposals(database);
-    this.fetchUserVotes(database,this.props);
-  }
-
-  componentWillReceiveProps(nextProps){
-    let database = this.props.firebase.database();
-    this.fetchUserVotes(database,nextProps);
+    this.fetchUserVotes(database);
+    this.listenForVote(database);
   }
 
   render(){
