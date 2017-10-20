@@ -27,6 +27,8 @@ export default class ProposalContainer extends Component<{}>{
   onPressFollowing(){
     if(!this.state.following){
       this.props.firebase.database().ref('Users/'+this.props.user.key+'/Following/'+this.props.proposal.key).set('true');
+    }else{
+      this.props.firebase.database().ref('Users/'+this.props.user.key+'/Following/'+this.props.proposal.key).remove();
     }
   }
 
@@ -57,10 +59,15 @@ export default class ProposalContainer extends Component<{}>{
   }
 
   compareFollowing(props){
+    var match = false;
     for(key in props.user.val().Following){
       if(key == props.proposal.key){
+        match = true;
         this.setState({following:true});
       }
+    }
+    if(!match){
+      this.setState({following:false});
     }
   }
 
