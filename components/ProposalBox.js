@@ -14,10 +14,21 @@ export default class ProposalBox extends Component<{}>{
   constructor(props){
     super(props);
     this.onSelectProposal = this.onSelectProposal.bind(this);
+    this.onSelectProComments = this.onSelectProComments.bind(this);
+    this.onSelectConComments = this.onSelectConComments.bind(this);
   }
 
   onSelectProposal(){
     this.props.selectProposal(this.props.proposal);
+  }
+
+  onSelectProComments(){
+console.log('box pro selected');
+    this.props.selectComments(this.props.proposal.child('CommentsPro'));
+  }
+
+  onSelectConComments(){
+    this.props.selectComments(this.props.proposal.val().CommentsCon);
   }
 
   render(){
@@ -51,7 +62,7 @@ export default class ProposalBox extends Component<{}>{
               <Text style={{color:'cornflowerblue'}}>{proPer}% </Text>
             </View>
             <Text style={styles.votes}> UpVoted by John Doe</Text>
-            <TouchableHighlight underlayColor="white" onPress={this.props.selectComments}>
+            <TouchableHighlight underlayColor="white" onPress={this.onSelectProComments}>
               <Text style={styles.comments}> View 45 comments </Text>
             </TouchableHighlight>
           </View>
@@ -61,7 +72,7 @@ export default class ProposalBox extends Component<{}>{
               <IconButton onPress={this.props.onPressDownVote} source={downVoteIcon}/>
             </View>
             <Text style={styles.votes} >DownVoted by Sheila Grant</Text>
-            <TouchableHighlight underlayColor="white" onPress={this.props.selectComments}>
+            <TouchableHighlight underlayColor="white" onPress={this.onSelectConComments}>
               <Text style={styles.comments}> View 14 comments </Text>
             </TouchableHighlight>
           </View>

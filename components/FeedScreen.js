@@ -36,8 +36,9 @@ export default class FeedScreen extends Component<{}>{
       );
     }
     if(this.props.selectedComments.key){
+console.log(this.props.selectedComments.val());
       return(
-       <CommentScreen returnIcon={returnIcon} deselectComments={this.props.resetSelections}/>
+       <CommentScreen database={this.props.database} selectedComments={this.props.selectedComments} returnIcon={returnIcon} deselectComments={this.props.resetSelections}/>
       );
     }
     return(

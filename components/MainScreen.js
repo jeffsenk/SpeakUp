@@ -29,9 +29,9 @@ export default class MainScreen extends Component<{}>{
     this.setState({followingScreen:false,categoryScreen:false,selectedProposal:{},selectedComments:{}});
   }
 
-  selectComments(){
+  selectComments(comments){
     this.resetSelections();
-    this.setState({selectedComments:{key:'abc123'}});
+    this.setState({selectedComments:comments});
   }
 
   selectProposal(proposal){
