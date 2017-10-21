@@ -22,12 +22,15 @@ export default class FocusArea extends Component<{}>{
   render(){
     if(this.props.followingScreen){
       return(
-        <FollowingScreen/>
+        <FollowingScreen userVotes={this.props.userVotes} database={this.props.database} resetSelections={this.props.resetSelections}
+       selectProposal={this.props.selectProposal} selectComments={this.props.selectComments} selectedProposal={this.props.selectedProposal}
+       selectedComments={this.props.selectedComments} proposals={this.props.proposals} userKey={this.props.userKey}
+       userFollowing={this.props.userFollowing}/>
       );
     }
     if(this.props.categoryScreen){
       return(
-        <CategoryScreen/>
+        <CategoryScreen database={this.props.database} userSubscribed={this.props.userSubscribed} userKey={this.props.userKey}/>
       );
     }
     return(

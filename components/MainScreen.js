@@ -62,7 +62,8 @@ export default class MainScreen extends Component<{}>{
         <FocusArea userVotes={this.props.userVotes} database={this.props.database} resetSelections={this.resetSelections}
          selectProposal={this.selectProposal} selectComments={this.selectComments} selectedProposal={this.state.selectedProposal}
          selectedComments={this.state.selectedComments} followingScreen={this.state.followingScreen} categoryScreen={this.state.categoryScreen}
-         userKey={this.props.userKey} proposals={this.props.proposals} userFollowing={this.props.userFollowing}/>
+         userKey={this.props.userKey} proposals={this.props.proposals} userFollowing={this.props.userFollowing}
+         userSubscribed={this.props.userSubscribed}/>
         <NavBar homePress={this.resetSelections} followingPress={this.selectFollowingScreen} categoryPress={this.selectCategoryScreen} />
       </View>
     );

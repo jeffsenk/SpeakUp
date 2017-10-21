@@ -22,7 +22,6 @@ export default class FeedScreen extends Component<{}>{
   }
 
   componentWillReceiveProps(nextProps){
-    console.log('feed screen new props');
     this.setState({userVotes:nextProps.userVotes});
     this.setState({following:nextProps.userFollowing});
   }

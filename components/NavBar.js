@@ -21,8 +21,8 @@ export default class NavBar extends Component<{}>{
     return(
       <View style={styles.main}>
         <IconButton source={homeIcon} onPress={this.props.homePress}/>
-        <IconButton source={categoryIcon} onPress={this.props.categoryPress}/>
-        <IconButton source={followingIcon} onPress={this.props.followingPress}/>
+        <IconButton source={categoryIcon} onPress={this.props.followingPress}/>
+        <IconButton source={followingIcon} onPress={this.props.categoryPress}/>
       </View>
     );
   }

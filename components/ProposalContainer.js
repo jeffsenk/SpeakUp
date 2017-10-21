@@ -86,13 +86,11 @@ export default class ProposalContainer extends Component<{}>{
   }
 
   componentDidMount(){
-    console.log('proposal container mounted');
     this.compareFollowing(this.props);
     this.compareVotes(this.props);
   }
 
   componentWillReceiveProps(nextProps){
-    console.log('new props in Proposal Container');
     this.compareFollowing(nextProps);
     this.compareVotes(nextProps);
   }
