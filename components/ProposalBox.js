@@ -23,12 +23,11 @@ export default class ProposalBox extends Component<{}>{
   }
 
   onSelectProComments(){
-console.log('box pro selected');
     this.props.selectComments(this.props.proposal.child('CommentsPro'));
   }
 
   onSelectConComments(){
-    this.props.selectComments(this.props.proposal.val().CommentsCon);
+    this.props.selectComments(this.props.proposal.child('CommentsCon'));
   }
 
   render(){

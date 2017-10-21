@@ -10,7 +10,7 @@ import {
   View
 } from 'react-native';
 
-import CommentItem from './CommentItem';
+import CommentArea from './CommentArea';
 
 export default class CommentScreen extends Component<{}>{
   constructor(props){
@@ -31,13 +31,6 @@ export default class CommentScreen extends Component<{}>{
   }
 
   render(){
-    if(this.state.comments.length == 0){
-      return(
-        <View>
-          <Text>No Comments</Text>
-        </View>
-      );
-    }
     return(
       <View style={{justifyContent:'space-around'}}>
         <View style={styles.topRow}>
@@ -48,10 +41,7 @@ export default class CommentScreen extends Component<{}>{
         </View>
         <View style={styles.detail}>
 
-        <FlatList extraData={this.state} data={this.state.comments}
-         renderItem={({item})=>
-           <CommentItem userKey={this.props.userKey} comment={item} database={this.props.database}/>
-         }/>
+        <CommentArea comments={this.state.comments} userKey={this.props.userKey} database={this.props.database} />
 
         </View>
         <View style={{height:50,borderTopWidth:1,borderTopColor:'lightgray'}}><Text>Add Comment...</Text></View>
