@@ -67,7 +67,6 @@ export default class MainContainer extends Component<{}>{
 
   componentDidMount(){
     this.fetchProposals(this.props.database);
-    this.fetchUserVotes(this.props.database);
     this.listenForVote(this.props.database);
   }
 

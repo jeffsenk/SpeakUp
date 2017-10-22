@@ -35,10 +35,10 @@ export default class CommentScreen extends Component<{}>{
   }
 
   componentDidMount(){
-    this.props.selectedComments.forEach(function(child){
-      this.props.database.ref('Comments/'+child.key).once('value').then(function(snapShot){
-        let newState = this.state.comments;
-        newState.push(snapShot);
+    this.props.selectedComments.ref.on('child_added',function(snapShot){
+      this.props.database.ref('Comments/'+snapShot.key).once('value').then(function(data){
+        let newState=this.state.comments;
+        newState.push(data);
         this.setState({comments:newState});
       }.bind(this));
     }.bind(this));

@@ -12,6 +12,7 @@ export default class CommentItem extends Component<{}>{
   }
 
   render(){
+    console.log(this.props.comment.val());
     return(
       <View style={styles.main}>
         <Text style={styles.user}>@{this.props.comment.val().AuthorName}</Text>
