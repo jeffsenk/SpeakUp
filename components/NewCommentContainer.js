@@ -19,6 +19,7 @@ export default class NewCommentContainer extends Component<{}>{
 
   onSend(){
     this.props.onSend(this.state.content);
+    this.setState({content:''});
   }
 
   render(){
