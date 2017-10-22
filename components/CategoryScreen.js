@@ -19,7 +19,7 @@ export default class CategoryScreen extends Component<{}>{
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({subscribed:nextProps.userSubscribed});
+    this.setState({subscribed:nextProps.user.val().Subscribed});
   }
 
   componentDidMount(){
@@ -37,7 +37,7 @@ export default class CategoryScreen extends Component<{}>{
       <View style={styles.main}>
         <FlatList extraData={this.state} data={this.state.categories}
          renderItem={({item})=>
-           <CategoryItem userKey={this.props.userKey} category={item} database={this.props.database} userSubscribed={this.props.userSubscribed}/> }/>
+           <CategoryItem user={this.props.user} category={item} database={this.props.database} /> }/>
       </View>
     );
   }

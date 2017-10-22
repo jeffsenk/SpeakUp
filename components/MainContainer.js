@@ -74,9 +74,7 @@ export default class MainContainer extends Component<{}>{
   render(){
     if(this.state.proposals.length>0){
       return(
-        <MainScreen userFollowing={this.props.user.val().Following} userVotes={this.state.userVotes}
-         database={this.props.database} userKey={this.props.user.key} proposals={this.state.proposals}
-         userSubscribed={this.props.user.val().Subscribed}/>
+        <MainScreen userVotes={this.state.userVotes} database={this.props.database} proposals={this.state.proposals} user={this.props.user}/>
       );
     }
 

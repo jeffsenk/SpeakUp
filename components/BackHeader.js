@@ -3,29 +3,27 @@ import {
   Platform,
   StyleSheet,
   Text,
-  ScrollView,
   TouchableHighlight,
   Image,
-  View,
+  View
 } from 'react-native';
-import BackHeader from './BackHeader';
 
-export default class DetailScreen extends Component<{}>{
+export default class BackHeader extends Component<{}>{
   constructor(props){
     super(props);
   }
 
   render(){
-    var title = "Details";
     return(
-      <View>
-        <BackHeader onPress={this.props.deselectProposal} returnIcon={this.props.returnIcon} title={title}/>
-        <View style={styles.detail}>
-          <Text>{this.props.proposal.val().Description}</Text>
+        <View style={styles.topRow}>
+          <TouchableHighlight style={styles.returnButton} underlayColor="white" onPress={this.props.onPress}>
+            <Image style={{height:40,width:50}} source={this.props.returnIcon}/>
+          </TouchableHighlight>
+          <Text style={{fontSize:20,fontWeight:'bold',marginLeft:20}}>{this.props.title}</Text>
         </View>
-      </View>
     );
   }
+
 }
 
 const styles = StyleSheet.create({
@@ -40,11 +38,5 @@ const styles = StyleSheet.create({
     borderBottomColor:'lightgray',
     borderBottomWidth:1,
     height:50
-  },
-  detail:{
-    height:540,
-    marginTop:20,
-    marginLeft:15,
-    marginRight:15
   }
 });

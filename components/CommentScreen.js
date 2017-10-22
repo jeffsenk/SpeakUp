@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 
 import CommentArea from './CommentArea';
+import NewCommentContainer from './NewCommentContainer';
+import BackHeader from './BackHeader';
 
 export default class CommentScreen extends Component<{}>{
   constructor(props){
@@ -18,6 +20,18 @@ export default class CommentScreen extends Component<{}>{
     this.state={
       comments:[]
     }
+    this.onSend = this.onSend.bind(this);
+  }
+
+  onSend(content){
+    let newKey = this.props.database.ref('Comments').push({
+      Author:this.props.user.key,
+      AuthorName:this.props.user.val().Name,
+      Proposal:this.props.selectedComments.ref.parent.key,
+      Content:content
+    }).key;
+    this.props.selectedComments.ref.child(newKey).set(true);
+    this.props.database.ref('Users/'+this.props.user.key+'/Comments/'+newKey).set(true);
   }
 
   componentDidMount(){
@@ -31,42 +45,16 @@ export default class CommentScreen extends Component<{}>{
   }
 
   render(){
+    var title = "Comments";
     return(
-      <View style={{justifyContent:'space-around'}}>
-        <View style={styles.topRow}>
-          <TouchableHighlight style={styles.returnButton} underlayColor="white" onPress={this.props.deselectComments}>
-            <Image style={{height:40,width:50}} source={this.props.returnIcon}/>
-          </TouchableHighlight>
-          <Text style={{fontSize:20,fontWeight:'bold',marginLeft:20}}>Comments</Text>
+      <View style={{flex:1,justifyContent:'space-between'}}>
+        <View>
+          <BackHeader onPress={this.props.deselectComments} returnIcon={this.props.returnIcon} title={title}/>
+          <CommentArea comments={this.state.comments} />
         </View>
-        <View style={styles.detail}>
-
-        <CommentArea comments={this.state.comments} userKey={this.props.userKey} database={this.props.database} />
-
-        </View>
-        <View style={{height:50,borderTopWidth:1,borderTopColor:'lightgray'}}><Text>Add Comment...</Text></View>
+        <NewCommentContainer onSend={this.onSend}/>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  returnButton:{
-    marginLeft:10,
-    height:40,
-    width:50,
-  },
-  topRow:{
-    flexDirection:'row',
-    alignItems:'center',
-    borderBottomColor:'lightgray',
-    borderBottomWidth:1,
-    height:50
-  },
-  detail:{
-    height:490,
-    marginTop:20,
-    marginLeft:15,
-    marginRight:15
-  }
-});

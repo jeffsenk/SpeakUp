@@ -23,12 +23,12 @@ export default class FollowingScreen extends Component<{}>{
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({userVotes:nextProps.userVotes});
-    this.setState({following:nextProps.userFollowing});
+    this.setState({userVotes:nextProps.user.val().Votes});
+    this.setState({following:nextProps.user.val().Following});
   }
 
   componentDidMount(){
-    for(key in this.props.userFollowing){
+    for(key in this.props.user.val().Following){
       this.props.database.ref('Proposals/'+key).once('value').then(function(snapShot){
         let newState = this.state.proposals;
         newState.push(snapShot);
@@ -55,9 +55,8 @@ export default class FollowingScreen extends Component<{}>{
           <IconButton  source={searchIcon}/>
         </View>
         <FlatList extraData={this.state} data={this.state.proposals}
-         renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} database={this.props.database}
-         userKey={this.props.userKey} proposal={item} userFollowing={this.props.userFollowing}
-         selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
+         renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} user={this.props.user} database={this.props.database}
+         proposal={item} selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
       </View>
     );
   }

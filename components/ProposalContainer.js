@@ -26,9 +26,9 @@ export default class ProposalContainer extends Component<{}>{
 
   onPressFollowing(){
     if(!this.state.following){
-      this.props.database.ref('Users/'+this.props.userKey+'/Following/'+this.props.proposal.key).set('true');
+      this.props.database.ref('Users/'+this.props.user.key+'/Following/'+this.props.proposal.key).set('true');
     }else{
-      this.props.database.ref('Users/'+this.props.userKey+'/Following/'+this.props.proposal.key).remove();
+      this.props.database.ref('Users/'+this.props.user.key+'/Following/'+this.props.proposal.key).remove();
     }
   }
 
@@ -36,10 +36,10 @@ export default class ProposalContainer extends Component<{}>{
     if(!this.state.upVote && !this.state.downVote){
       let newKey = this.props.database.ref('Votes/').push({
         Proposal:this.props.proposal.key,
-        User:this.props.userKey,
+        User:this.props.user.key,
         UpVote:true
       }).key;
-      this.props.database.ref('Users/'+this.props.userKey+'/Votes/'+newKey).set('true');
+      this.props.database.ref('Users/'+this.props.user.key+'/Votes/'+newKey).set('true');
       this.props.database.ref('Proposals/'+this.props.proposal.key+'/UpVotes/'+newKey).set('true');
     }else{
       Alert.alert('Vote has already been submitted');
@@ -50,10 +50,10 @@ export default class ProposalContainer extends Component<{}>{
     if(!this.state.upVote && !this.state.downVote){
       let newKey = this.props.database.ref('Votes/').push({
         Proposal:this.props.proposal.key,
-        User:this.props.userKey,
+        User:this.props.user.key,
         UpVote:false
       }).key;
-      this.props.database.ref('Users/'+this.props.userKey+'/Votes/'+newKey).set('true');
+      this.props.database.ref('Users/'+this.props.user.key+'/Votes/'+newKey).set('true');
       this.props.database.ref('Proposals/'+this.props.proposal.key+'/DownVotes/'+newKey).set('true');
     }else{
       Alert.alert('Vote has already been submitted');
@@ -62,7 +62,7 @@ export default class ProposalContainer extends Component<{}>{
 
   compareFollowing(props){
     var match = false;
-    for(key in props.userFollowing){
+    for(key in props.user.val().Following){
       if(key == props.proposal.key){
         match = true;
         this.setState({following:true});

@@ -17,7 +17,7 @@ export default class CommentArea extends Component<{}>{
   render(){
     if(this.props.comments.length >0){
       return(
-      <View>
+      <View style={styles.main}>
         <FlatList data={this.props.comments} renderItem={({item})=>
           <CommentItem comment={item}/>
         }/>
@@ -25,10 +25,15 @@ export default class CommentArea extends Component<{}>{
       );
     }
     return(
-      <View>
+      <View style={styles.main}>
         <Text>No Comments Yet</Text>
       </View>
     );
   }
-
 }
+const styles = StyleSheet.create({
+  main:{
+    marginLeft:10
+  }
+});
+

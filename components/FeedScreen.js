@@ -23,7 +23,7 @@ export default class FeedScreen extends Component<{}>{
 
   componentWillReceiveProps(nextProps){
     this.setState({userVotes:nextProps.userVotes});
-    this.setState({following:nextProps.userFollowing});
+    this.setState({following:nextProps.user.val().Following});
   }
 
   render(){
@@ -36,9 +36,8 @@ export default class FeedScreen extends Component<{}>{
       );
     }
     if(this.props.selectedComments.key){
-console.log(this.props.selectedComments.val());
       return(
-       <CommentScreen database={this.props.database} selectedComments={this.props.selectedComments} returnIcon={returnIcon} deselectComments={this.props.resetSelections}/>
+       <CommentScreen user={this.props.user} database={this.props.database} selectedComments={this.props.selectedComments} returnIcon={returnIcon} deselectComments={this.props.resetSelections}/>
       );
     }
     return(
@@ -49,8 +48,7 @@ console.log(this.props.selectedComments.val());
         </View>
         <FlatList extraData={this.state} data={this.props.proposals}
          renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} database={this.props.database}
-         userKey={this.props.userKey} proposal={item} userFollowing={this.props.userFollowing}
-         selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
+         user={this.props.user} proposal={item} selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
       </View>
     );
   }

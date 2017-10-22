@@ -22,22 +22,21 @@ export default class FocusArea extends Component<{}>{
   render(){
     if(this.props.followingScreen){
       return(
-        <FollowingScreen userVotes={this.props.userVotes} database={this.props.database} resetSelections={this.props.resetSelections}
+        <FollowingScreen userVotes={this.props.userVotes} user={this.props.user} database={this.props.database}
+       resetSelections={this.props.resetSelections}
        selectProposal={this.props.selectProposal} selectComments={this.props.selectComments} selectedProposal={this.props.selectedProposal}
-       selectedComments={this.props.selectedComments} proposals={this.props.proposals} userKey={this.props.userKey}
-       userFollowing={this.props.userFollowing}/>
+       userVotes={this.props.userVotes} selectedComments={this.props.selectedComments} proposals={this.props.proposals} />
       );
     }
     if(this.props.categoryScreen){
       return(
-        <CategoryScreen database={this.props.database} userSubscribed={this.props.userSubscribed} userKey={this.props.userKey}/>
+        <CategoryScreen database={this.props.database} user={this.props.user}/>
       );
     }
     return(
       <FeedScreen userVotes={this.props.userVotes} database={this.props.database} resetSelections={this.props.resetSelections}
        selectProposal={this.props.selectProposal} selectComments={this.props.selectComments} selectedProposal={this.props.selectedProposal}
-       selectedComments={this.props.selectedComments} proposals={this.props.proposals} userKey={this.props.userKey}
-       userFollowing={this.props.userFollowing}/>
+       selectedComments={this.props.selectedComments} proposals={this.props.proposals} user={this.props.user}/>
     );
   }
 }
