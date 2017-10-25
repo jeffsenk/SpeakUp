@@ -21,26 +21,31 @@ export default class MainContainer extends Component<{}>{
 
 
   fetchProposals(database){
-    let proposals = database.ref('Proposals');
-    proposals.on('value',function(snapshot){
-      snapshot.forEach(function(child){
-        var match = false;
-        for(var i =0;i<this.state.proposals.length;i++){
-          if(this.state.proposals[i].key == child.key){
-            let newState = this.state.proposals;
-            newState[i] = child;
-            this.setState({proposals:newState});
-            match = true;
-            break;
+    let categories = this.props.user.val().Subscribed;
+    for(key in categories){
+      let proposals = database.ref('Categories/'+key+'/Proposals');
+      proposals.on('value',function(snapshot){
+        snapshot.forEach(function(child){
+          database.ref('Proposals/'+child.key).on('value',function(data){
+          var match = false;
+          for(var i =0;i<this.state.proposals.length;i++){
+            if(this.state.proposals[i].key == data.key){
+              let newState = this.state.proposals;
+              newState[i] = data;
+              this.setState({proposals:newState});
+              match = true;
+              break;
+            }
           }
-        }
-        if(!match){
-          let newState = this.state.proposals;
-          newState.push(child);
-          this.setState({proposals:newState});
-        }
+          if(!match){
+            let newState = this.state.proposals;
+            newState.push(data);
+            this.setState({proposals:newState});
+          }
+          }.bind(this));
+        }.bind(this));
       }.bind(this));
-    }.bind(this));
+    }
   }
 
   fetchUserVotes(database){

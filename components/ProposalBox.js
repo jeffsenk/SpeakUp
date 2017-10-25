@@ -35,20 +35,43 @@ export default class ProposalBox extends Component<{}>{
     var upVoteIcon = this.props.upVote ? require('../assets/postUpVote.png') : require('../assets/preUpVote.jpg');
     var downVoteIcon = this.props.downVote ? require('../assets/postDownVote.png') : require('../assets/preDownVote.png');
 
-    var total = this.props.proposal.val().VotesPro + this.props.proposal.val().VotesCon;
-    var pro =0;
-    var con =0;
-    if(total>0){
-     var pro= ((this.props.proposal.val().VotesPro/total)*100).toFixed(0);
-     var con= ((this.props.proposal.val().VotesCon/total)*100).toFixed(0);
+
+    var upVotes = 0;
+    var downVotes = 0;
+    var pro = 0;
+    var con = 0;
+    var commentProCount = 0;
+    var commentConCount = 0;
+
+    if(this.props.proposal.val().UpVotes){
+      upVotes = Object.keys(this.props.proposal.val().UpVotes).length;
     }
+    if(this.props.proposal.val().DownVotes){
+      downVotes = Object.keys(this.props.proposal.val().DownVotes).length;
+    }
+    
+    if(this.props.proposal.val().CommentsPro){
+      commentProCount = Object.keys(this.props.proposal.val().CommentsPro).length;
+    }
+    if(this.props.proposal.val().CommentsCon){
+      commentConCount = Object.keys(this.props.proposal.val().CommentsCon).length;
+    }
+
+    var total = upVotes + downVotes;
+    if(total>0){
+     pro= ((upVotes/total)*100).toFixed(0);
+     con= ((downVotes/total)*100).toFixed(0);
+    }
+    
     const proPer = pro;
     const conPer = con;
 
     return(
       <View style={styles.outer}>
         <View style={styles.topRow}>
-          <Text>{this.props.proposal.val().Category} - {this.props.proposal.val().GroupName}</Text>
+          <Text style={[styles.base,this.props.proposal.val().Category=='Politics' && styles.politics,
+            this.props.proposal.val().Category=='Sports' && styles.sports,this.props.proposal.val().Category=='Tech' && styles.tech,] 
+            }>{this.props.proposal.val().Category} - {this.props.proposal.val().GroupName}</Text>
           <IconButton onPress={this.props.onPressFollowing} source={followIcon}/>
         </View>
         <TouchableHighlight underlayColor="white" onPress={this.onSelectProposal}>
@@ -60,9 +83,9 @@ export default class ProposalBox extends Component<{}>{
               <IconButton onPress={this.props.onPressUpVote} source={upVoteIcon}/>
               <Text style={{color:'cornflowerblue'}}>{proPer}% </Text>
             </View>
-            <Text style={styles.votes}> UpVoted by John Doe</Text>
+            <Text style={styles.votes}> {upVotes} UpVotes</Text>
             <TouchableHighlight underlayColor="white" onPress={this.onSelectProComments}>
-              <Text style={styles.comments}> View 45 comments </Text>
+              <Text style={styles.comments}> View {commentProCount} Pro comments </Text>
             </TouchableHighlight>
           </View>
           <View style={{marginRight:10}}>
@@ -70,9 +93,9 @@ export default class ProposalBox extends Component<{}>{
               <Text style={{color:'salmon'}}>{conPer}% </Text>
               <IconButton onPress={this.props.onPressDownVote} source={downVoteIcon}/>
             </View>
-            <Text style={styles.votes} >DownVoted by Sheila Grant</Text>
+            <Text style={styles.votes} >{downVotes} DownVotes</Text>
             <TouchableHighlight underlayColor="white" onPress={this.onSelectConComments}>
-              <Text style={styles.comments}> View 14 comments </Text>
+              <Text style={styles.comments}> View {commentConCount} Con comments </Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -87,6 +110,18 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'row',
     justifyContent:'space-between'
+  },
+  base:{
+    color:'black'
+  },
+  politics:{
+    color:'salmon'
+  },
+  sports:{
+    color:'green'
+  },
+  tech:{
+    color:'cornflowerblue'
   },
   topRow:{
     height:30,
@@ -116,6 +151,6 @@ const styles = StyleSheet.create({
   title:{
     height:60,
     marginBottom:5,
-    fontSize:25
+    fontSize:20
   }
 });
