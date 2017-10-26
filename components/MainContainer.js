@@ -77,19 +77,11 @@ export default class MainContainer extends Component<{}>{
   }
 
   render(){
-    if(this.state.proposals.length>0){
       return(
         <MainScreen userVotes={this.state.userVotes} database={this.props.database} proposals={this.state.proposals} user={this.props.user}/>
       );
-    }
 
-    var megaphoneIcon = require('../assets/megaphoneIcon.png');
 
-    return(
-      <View style={{flex:1,justifyContent:'center', alignItems:'center'}}>
-       <Image style={{height:100,width:100}} source={megaphoneIcon}/>
-      </View>
-    );
   }
 
 }
