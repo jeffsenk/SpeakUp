@@ -21,7 +21,9 @@ export default class DetailScreen extends Component<{}>{
       <View>
         <BackHeader onPress={this.props.deselectProposal} returnIcon={this.props.returnIcon} title={title}/>
         <View style={styles.detail}>
-          <Text>{this.props.proposal.val().Description}</Text>
+          <Text style={styles.paragraph}>{this.props.proposal.val().Description}</Text>
+          <Text style={styles.paragraph}>{this.props.proposal.val().ArgumentPro}</Text>
+          <Text style={styles.paragraph}>{this.props.proposal.val().ArgumentCon}</Text>
         </View>
       </View>
     );
@@ -46,5 +48,8 @@ const styles = StyleSheet.create({
     marginTop:20,
     marginLeft:15,
     marginRight:15
+  },
+  paragraph:{
+    marginBottom:10
   }
 });

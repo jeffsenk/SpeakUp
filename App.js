@@ -30,6 +30,8 @@ export default class App extends Component<{}> {
       authUser: {},
       dbUser:{}
     }
+    console.ignoredYellowBox=['Setting a timer'];
+
   }
 
   componentWillMount(){
@@ -55,7 +57,7 @@ export default class App extends Component<{}> {
   render() {
     if(this.state.dbUser.key){
       return(
-        <MainContainer user={this.state.dbUser} firebase={firebase}/>
+        <MainContainer user={this.state.dbUser} database={firebase.database()}/>
       );
     }
     return (

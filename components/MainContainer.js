@@ -14,49 +14,50 @@ export default class MainContainer extends Component<{}>{
       proposals:[],
       userVotes:[]
     }
-    this.fetchProposals = this.fetchProposals.bind(this);
-    this.fetchUserVotes = this.fetchUserVotes.bind(this);
     this.listenForVote = this.listenForVote.bind(this);
+    this.assignCategories = this.assignCategories.bind(this);
   }
 
-
-  fetchProposals(database){
-    let categories = this.props.user.val().Subscribed;
-    for(key in categories){
-      let proposals = database.ref('Categories/'+key+'/Proposals');
-      proposals.on('value',function(snapshot){
-        snapshot.forEach(function(child){
-          database.ref('Proposals/'+child.key).on('value',function(data){
-          var match = false;
-          for(var i =0;i<this.state.proposals.length;i++){
-            if(this.state.proposals[i].key == data.key){
+  assignCategories(database){
+    let subscribed = this.props.user.child('Subscribed').ref;
+    subscribed.on('child_added',function(snapShot){
+      database.ref('Categories/'+snapShot.key+'/Proposals').once('value').then(function(proposals){
+        proposals.forEach(function(proposal){
+          database.ref('Proposals/'+proposal.key).on('value',function(data){
+            let match = false;
+            for(var i = 0;i<this.state.proposals.length;i++){
+              if(this.state.proposals[i].key == data.key){
+                let newState = this.state.proposals;
+                newState[i] = data;
+                this.setState({proposals:newState});
+                match = true;
+                break;
+              }
+            }
+            if(!match){
               let newState = this.state.proposals;
-              newState[i] = data;
+              newState.push(data);
               this.setState({proposals:newState});
-              match = true;
+            }
+          }.bind(this));
+        }.bind(this));
+      }.bind(this));      
+    }.bind(this));
+    subscribed.on('child_removed',function(snapShot){
+      database.ref('Categories/'+snapShot.key+'/Proposals').once('value').then(function(proposals){
+        proposals.forEach(function(proposal){
+          for(var i=0;i<this.state.proposals.length;i++){
+            if(this.state.proposals[i].key == proposal.key){
+              var newState = this.state.proposals;
+              newState.splice(i,1);
+              this.setState({proposals:newState});
               break;
             }
           }
-          if(!match){
-            let newState = this.state.proposals;
-            newState.push(data);
-            this.setState({proposals:newState});
-          }
-          }.bind(this));
-        }.bind(this));
+        }.bind(this)); 
       }.bind(this));
-    }
-  }
+    }.bind(this));
 
-  fetchUserVotes(database){
-    for(key in this.props.user.val().Votes){
-      let voteRef = database.ref('Votes/'+key);
-      voteRef.once('value').then(function(snapShot){
-        let newState = this.state.userVotes;
-        newState.push(snapShot);
-        this.setState({userVotes:newState});
-      }.bind(this));
-    }
   }
 
   listenForVote(database){
@@ -71,7 +72,7 @@ export default class MainContainer extends Component<{}>{
   }
 
   componentDidMount(){
-    this.fetchProposals(this.props.database);
+    this.assignCategories(this.props.database);
     this.listenForVote(this.props.database);
   }
 
