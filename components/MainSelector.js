@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import FocusArea from './FocusArea';
 import NavBar from './NavBar';
+import {TabNavigator} from 'react-navigation';
 
-export default class MainScreen extends Component<{}>{
+export default class HomeScreen extends Component<{}>{
   constructor(props){
     super(props);
     this.state={
@@ -74,4 +75,8 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent:'flex-end'
   }
+});
+
+export const MainSelector = TabNavigator({
+  Home:{screen:HomeScreen},
 });

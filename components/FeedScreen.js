@@ -29,15 +29,16 @@ export default class FeedScreen extends Component<{}>{
   render(){
     var returnIcon = require('../assets/outlineReturn.png');
     var searchIcon = require('../assets/searchIcon.png');
-
-    if(this.props.selectedProposal.key){
+    const props = this.props.screenProps;
+console.log(props);
+    if(props.selectedProposal.key){
       return(
-        <DetailScreen proposal={this.props.selectedProposal} returnIcon={returnIcon} deselectProposal={this.props.resetSelections}/>
+        <DetailScreen proposal={props.selectedProposal} returnIcon={returnIcon} deselectProposal={props.resetSelections}/>
       );
     }
-    if(this.props.selectedComments.key){
+    if(props.selectedComments.key){
       return(
-       <CommentScreen user={this.props.user} database={this.props.database} selectedComments={this.props.selectedComments} returnIcon={returnIcon} deselectComments={this.props.resetSelections}/>
+       <CommentScreen user={props.user} database={props.database} selectedComments={props.selectedComments} returnIcon={returnIcon} deselectComments={props.resetSelections}/>
       );
     }
     return(
@@ -46,9 +47,9 @@ export default class FeedScreen extends Component<{}>{
           <Text style={{marginLeft:150,fontSize:20,color:'lightgray'}}>Search... </Text>
           <IconButton  source={searchIcon}/>
         </View>
-        <FlatList extraData={this.state} data={this.props.proposals}
-         renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} database={this.props.database}
-         user={this.props.user} proposal={item} selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
+        <FlatList extraData={this.state} data={props.proposals}
+         renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} database={props.database}
+         user={props.user} proposal={item} selectComments={props.selectComments} selectProposal={props.selectProposal}/> }/>
       </View>
     );
   }

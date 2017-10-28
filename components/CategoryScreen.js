@@ -33,11 +33,12 @@ export default class CategoryScreen extends Component<{}>{
   }
 
   render(){
+    const props = this.props.screenProps;
     return(
       <View style={styles.main}>
         <FlatList extraData={this.state} data={this.state.categories}
          renderItem={({item})=>
-           <CategoryItem user={this.props.user} category={item} database={this.props.database} /> }/>
+           <CategoryItem user={props.user} category={item} database={props.database} /> }/>
       </View>
     );
   }

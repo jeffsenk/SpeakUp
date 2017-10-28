@@ -5,7 +5,8 @@ import {
   Image,
   Text
 } from 'react-native';
-import MainScreen from './MainScreen';
+import MainSelector from './MainSelector';
+import {TabContainer} from './TabContainer';
 
 export default class MainContainer extends Component<{}>{
   constructor(props){
@@ -78,7 +79,7 @@ export default class MainContainer extends Component<{}>{
 
   render(){
       return(
-        <MainScreen userVotes={this.state.userVotes} database={this.props.database} proposals={this.state.proposals} user={this.props.user}/>
+        <TabContainer screenProps={{selectedProposal:{},selectedComments:{},userVotes:this.state.userVotes,database:this.props.database,proposals:this.state.proposals,user:this.props.user}}/>
       );
 
 
