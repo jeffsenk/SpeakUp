@@ -17,10 +17,6 @@ export default class CategoryScreen extends Component<{}>{
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({subscribed:nextProps.screenProps.user.val().Subscribed});
-  }
-
   render(){
     const props = this.props.screenProps;
     return(

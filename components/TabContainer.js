@@ -8,22 +8,22 @@ import {
   View
 } from 'react-native';
 import {TabNavigator} from 'react-navigation';
-import FeedScreen from './FeedScreen';
+import {FeedContainer} from './FeedContainer';
 import CategoryScreen from './CategoryScreen';
-import FollowingScreen from './FollowingScreen';
+import {FollowingContainer} from './FollowingContainer';
 
 export const TabContainer = TabNavigator({
   Home:{
-    screen: FeedContainer,
+    screen: FeedContainer
   },
   Category:{
-    screen: CategoryScreen,
+    screen: CategoryScreen
   },
   Following:{
     screen: FollowingContainer
   }
 },{
   tabBarPosition:'bottom',
-  animationEnabled:'true'  
+  animationEnabled:true  
 })
 

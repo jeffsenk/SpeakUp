@@ -17,13 +17,14 @@ export default class DetailScreen extends Component<{}>{
 
   render(){
     var title = "Details";
+    var props = this.props.navigation.state.params;
+    console.log(this.props.navigation.state.params);
     return(
       <View>
-        <BackHeader onPress={this.props.deselectProposal} returnIcon={this.props.returnIcon} title={title}/>
         <View style={styles.detail}>
-          <Text style={styles.paragraph}>{this.props.proposal.val().Description}</Text>
-          <Text style={styles.paragraph}>{this.props.proposal.val().ArgumentPro}</Text>
-          <Text style={styles.paragraph}>{this.props.proposal.val().ArgumentCon}</Text>
+          <Text style={styles.paragraph}>{props.proposal.val().Description}</Text>
+          <Text style={styles.paragraph}>{props.proposal.val().ArgumentPro}</Text>
+          <Text style={styles.paragraph}>{props.proposal.val().ArgumentCon}</Text>
         </View>
       </View>
     );

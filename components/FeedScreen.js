@@ -21,16 +21,16 @@ export default class FeedScreen extends Component<{}>{
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({userVotes:nextProps.screenProps.userVotes});
-    this.setState({following:nextProps.screenProps.user.val().Following});
-  }
-
   render(){
     var searchIcon = require('../assets/searchIcon.png');
     const props = this.props.screenProps;
-    const selectProposal = this.props.navigate('DetailScreen');
-    const selectComments = this.props.navigate('CommentScreen');
+    const selectProposal = function(proposal){
+      this.props.navigation.navigate('Detail',{proposal:proposal});
+    }.bind(this);
+
+    const selectComments = function(comments){
+      this.props.navigation.navigate('Comment',{selectedComments:comments});
+    }.bind(this);
 
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
@@ -40,7 +40,7 @@ export default class FeedScreen extends Component<{}>{
         </View>
         <FlatList extraData={this.state} data={props.proposals}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} database={props.database}
-         user={props.user} proposal={item} selectProposal={selectProposal} selectComments={selectComments} }/> }/>
+         user={props.user} proposal={item} selectProposal={selectProposal} selectComments={selectComments} /> }/>
       </View>
     );
   }

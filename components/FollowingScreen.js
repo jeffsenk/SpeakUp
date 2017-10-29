@@ -21,26 +21,16 @@ export default class FollowingScreen extends Component<{}>{
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({userVotes:nextProps.screenProps.user.val().Votes});
-    this.setState({following:nextProps.screenProps.user.val().Following});
-  }
-
-  componentDidMount(){
-    for(key in this.props.user.val().Following){
-      this.props.database.ref('Proposals/'+key).once('value').then(function(snapShot){
-        let newState = this.state.proposals;
-        newState.push(snapShot);
-        this.setState({proposals:newState});
-      }.bind(this));
-    }
-  }
-
   render(){
     var searchIcon = require('../assets/searchIcon.png');
     const props = this.props.screenProps;
-    const selectProposal = this.props.navigate('DetailScreen');
-    const selectComments = this.props.navigate('CommentScreen');
+    const selectProposal = function(proposal){
+      this.props.navigation.navigate('Detail',{proposal:proposal});
+    }.bind(this);
+
+    const selectComments = function(comments){
+      this.props.navigation.navigate('Comment',{selectedComments:comments});
+    }.bind(this);
 
     if(props.following.length ==0 ){
       return(

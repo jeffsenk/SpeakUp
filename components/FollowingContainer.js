@@ -8,12 +8,12 @@ import {
   View
 } from 'react-native';
 import {StackNavigator} from 'react-navigation';
-import FollowingScreen from './FeedScreen';
-import DetailScreen from './CategoryScreen';
-import CommentScreen from './FollowingScreen';
+import FollowingScreen from './FollowingScreen';
+import DetailScreen from './DetailScreen';
+import CommentScreen from './CommentScreen';
 
 export const FollowingContainer = StackNavigator({
-  Home:{
+  Following:{
     screen: FollowingScreen,
   },
   Detail:{

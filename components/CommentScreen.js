@@ -46,10 +46,10 @@ export default class CommentScreen extends Component<{}>{
 
   render(){
     var title = "Comments";
+    var props = this.props.navigation.state.params;
     return(
       <View style={{flex:1,justifyContent:'space-between'}}>
         <View>
-          <BackHeader onPress={this.props.deselectComments} returnIcon={this.props.returnIcon} title={title}/>
           <CommentArea comments={this.state.comments} />
         </View>
         <NewCommentContainer onSend={this.onSend}/>
