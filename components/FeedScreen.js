@@ -22,25 +22,16 @@ export default class FeedScreen extends Component<{}>{
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({userVotes:nextProps.userVotes});
-    this.setState({following:nextProps.user.val().Following});
+    this.setState({userVotes:nextProps.screenProps.userVotes});
+    this.setState({following:nextProps.screenProps.user.val().Following});
   }
 
   render(){
-    var returnIcon = require('../assets/outlineReturn.png');
     var searchIcon = require('../assets/searchIcon.png');
     const props = this.props.screenProps;
-console.log(props);
-    if(props.selectedProposal.key){
-      return(
-        <DetailScreen proposal={props.selectedProposal} returnIcon={returnIcon} deselectProposal={props.resetSelections}/>
-      );
-    }
-    if(props.selectedComments.key){
-      return(
-       <CommentScreen user={props.user} database={props.database} selectedComments={props.selectedComments} returnIcon={returnIcon} deselectComments={props.resetSelections}/>
-      );
-    }
+    const selectProposal = this.props.navigate('DetailScreen');
+    const selectComments = this.props.navigate('CommentScreen');
+
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
@@ -49,11 +40,12 @@ console.log(props);
         </View>
         <FlatList extraData={this.state} data={props.proposals}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} database={props.database}
-         user={props.user} proposal={item} selectComments={props.selectComments} selectProposal={props.selectProposal}/> }/>
+         user={props.user} proposal={item} selectProposal={selectProposal} selectComments={selectComments} }/> }/>
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   search:{
     marginLeft:10,

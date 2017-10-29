@@ -13,10 +13,34 @@ export default class MainContainer extends Component<{}>{
     super(props);
     this.state={
       proposals:[],
-      userVotes:[]
+      userVotes:[],
+      categories:[],
+      following:[]
     }
     this.listenForVote = this.listenForVote.bind(this);
     this.assignCategories = this.assignCategories.bind(this);
+    this.fetchCategories = this.fetchCategories.bind(this);
+    this.fetchFollowing = this.fetchFollowing.bind(this);
+  }
+
+  fetchFollowing(database){
+    for(key in this.props.user.val().Following){
+      database.ref('Proposals/'+key).once('value').then(function(snapShot){
+        let newState = this.state.following;
+        newState.push(snapShot);
+        this.setState({following:newState});
+      }.bind(this));
+    }
+  }
+
+  fetchCategories(database){
+    database.ref('Categories').once('value').then(function(snapShot){
+      snapShot.forEach(function(category){
+        let newState = this.state.categories;
+        newState.push(category);
+        this.setState({categories:newState});
+      }.bind(this));
+    }.bind(this));
   }
 
   assignCategories(database){
@@ -75,14 +99,14 @@ export default class MainContainer extends Component<{}>{
   componentDidMount(){
     this.assignCategories(this.props.database);
     this.listenForVote(this.props.database);
+    this.fetchCategories(this.props.database);
+    this.fetchFollowing(this.props.database);
   }
 
   render(){
       return(
-        <TabContainer screenProps={{selectedProposal:{},selectedComments:{},userVotes:this.state.userVotes,database:this.props.database,proposals:this.state.proposals,user:this.props.user}}/>
+        <TabContainer screenProps={{userVotes:this.state.userVotes,database:this.props.database,proposals:this.state.proposals,user:this.props.user,
+         categories:this.state.categories,following:this.state.following}}/>
       );
-
-
   }
-
 }

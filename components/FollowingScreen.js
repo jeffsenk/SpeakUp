@@ -18,13 +18,12 @@ export default class FollowingScreen extends Component<{}>{
     this.state={
       userVotes:[],
       following:{},
-      proposals:[]
     }
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({userVotes:nextProps.user.val().Votes});
-    this.setState({following:nextProps.user.val().Following});
+    this.setState({userVotes:nextProps.screenProps.user.val().Votes});
+    this.setState({following:nextProps.screenProps.user.val().Following});
   }
 
   componentDidMount(){
@@ -39,8 +38,11 @@ export default class FollowingScreen extends Component<{}>{
 
   render(){
     var searchIcon = require('../assets/searchIcon.png');
+    const props = this.props.screenProps;
+    const selectProposal = this.props.navigate('DetailScreen');
+    const selectComments = this.props.navigate('CommentScreen');
 
-    if(this.state.proposals.length ==0 ){
+    if(props.following.length ==0 ){
       return(
         <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
           <Text style={{fontSize:15}}> You are not currently following any Proposals </Text>
@@ -54,9 +56,9 @@ export default class FollowingScreen extends Component<{}>{
           <Text style={{marginLeft:150,fontSize:20,color:'lightgray'}}>Search... </Text>
           <IconButton  source={searchIcon}/>
         </View>
-        <FlatList extraData={this.state} data={this.state.proposals}
-         renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} user={this.props.user} database={this.props.database}
-         proposal={item} selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
+        <FlatList extraData={this.state} data={props.following}
+         renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} user={props.user} database={props.database}
+         proposal={item} selectProposal={selectProposal} selectComments={selectComments}/> }/>
       </View>
     );
   }

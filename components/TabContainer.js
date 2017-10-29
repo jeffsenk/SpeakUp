@@ -14,10 +14,13 @@ import FollowingScreen from './FollowingScreen';
 
 export const TabContainer = TabNavigator({
   Home:{
-    screen: FeedScreen,
+    screen: FeedContainer,
   },
   Category:{
     screen: CategoryScreen,
+  },
+  Following:{
+    screen: FollowingContainer
   }
 },{
   tabBarPosition:'bottom',

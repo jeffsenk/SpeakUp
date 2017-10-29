@@ -13,30 +13,19 @@ export default class CategoryScreen extends Component<{}>{
   constructor(props){
     super(props);
     this.state = {
-      categories:[],
       subscribed:{}
     }
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({subscribed:nextProps.user.val().Subscribed});
-  }
-
-  componentDidMount(){
-    this.props.database.ref('Categories').once('value').then(function(snapShot){
-      snapShot.forEach(function(category){
-        let newState = this.state.categories;
-        newState.push(category);
-        this.setState({categories:newState});
-      }.bind(this));
-    }.bind(this));
+    this.setState({subscribed:nextProps.screenProps.user.val().Subscribed});
   }
 
   render(){
     const props = this.props.screenProps;
     return(
       <View style={styles.main}>
-        <FlatList extraData={this.state} data={this.state.categories}
+        <FlatList extraData={this.state} data={props.categories}
          renderItem={({item})=>
            <CategoryItem user={props.user} category={item} database={props.database} /> }/>
       </View>
