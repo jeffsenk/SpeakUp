@@ -21,6 +21,11 @@ export default class FollowingScreen extends Component<{}>{
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({userVotes:nextProps.screenProps.user.val().Votes});
+    this.setState({following:nextProps.screenProps.user.val().Following});
+  }
+
   render(){
     var searchIcon = require('../assets/searchIcon.png');
     const props = this.props.screenProps;

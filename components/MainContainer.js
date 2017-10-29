@@ -24,13 +24,23 @@ export default class MainContainer extends Component<{}>{
   }
 
   fetchFollowing(database){
-    for(key in this.props.user.val().Following){
-      database.ref('Proposals/'+key).once('value').then(function(snapShot){
+    this.props.user.child('Following').ref.on('child_added',function(data){
+      database.ref('Proposals/'+data.key).once('value').then(function(snapShot){
         let newState = this.state.following;
         newState.push(snapShot);
         this.setState({following:newState});
       }.bind(this));
-    }
+    }.bind(this));
+    this.props.user.child('Following').ref.on('child_removed',function(data){
+      for(var i =0;i<this.state.following.length;i++){
+        if(this.state.following[i].key == data.key){
+          let newState = this.state.following;
+          newState.splice(i,1);
+          this.setState({following:newState});
+          break;
+        }
+      }
+    }.bind(this));
   }
 
   fetchCategories(database){

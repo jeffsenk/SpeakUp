@@ -21,6 +21,11 @@ export default class FeedScreen extends Component<{}>{
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({userVotes:nextProps.screenProps.userVotes});
+    this.setState({following:nextProps.screenProps.user.val().Following});
+  }
+
   render(){
     var searchIcon = require('../assets/searchIcon.png');
     const props = this.props.screenProps;
