@@ -18,7 +18,6 @@ export default class DetailScreen extends Component<{}>{
   render(){
     var title = "Details";
     var props = this.props.navigation.state.params;
-    console.log(this.props.navigation.state.params);
     return(
       <View>
         <View style={styles.detail}>
