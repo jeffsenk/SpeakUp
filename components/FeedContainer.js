@@ -22,5 +22,9 @@ export const FeedContainer = StackNavigator({
   Comment:{
     screen: CommentScreen,
   },
+},{
+  cardStyle:{
+    backgroundColor:'transparent'
+  }
 })
 

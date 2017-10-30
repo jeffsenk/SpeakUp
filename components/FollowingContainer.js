@@ -22,5 +22,9 @@ export const FollowingContainer = StackNavigator({
   Comment:{
     screen: CommentScreen,
   }
+},{
+  cardStyle:{
+    backgroundColor:'transparent'
+  }
 })
 

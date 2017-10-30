@@ -14,9 +14,9 @@ import {FollowingContainer} from './FollowingContainer';
 
 export const TabContainer = TabNavigator({
   Home:{
-    screen: FeedContainer
+    screen: FeedContainer,
   },
-  Category:{
+  Categories:{
     screen: CategoryScreen
   },
   Following:{
@@ -24,6 +24,22 @@ export const TabContainer = TabNavigator({
   }
 },{
   tabBarPosition:'bottom',
-  animationEnabled:true  
+  animationEnabled:true,
+  tabBarOptions:{
+    pressColor:'lightgray',
+    style:{
+      backgroundColor:'transparent'
+    },
+    labelStyle:{
+      color:'black'
+    },
+    tabStyle:{
+      borderTopWidth:1,
+      borderTopColor:'lightgray'
+    },
+    indicatorStyle:{
+      backgroundColor:'black'
+    }
+  }  
 })
 

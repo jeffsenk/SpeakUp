@@ -13,6 +13,10 @@ import DetailScreen from './DetailScreen';
 import CommentScreen from './CommentScreen';
 
 export default class FollowingScreen extends Component<{}>{
+  static navigationOptions={
+    header:null
+  }
+
   constructor(props){
     super(props);
     this.state={

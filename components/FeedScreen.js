@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   FlatList,
+  Image,
   View
 } from 'react-native';
 
@@ -13,6 +14,10 @@ import DetailScreen from './DetailScreen';
 import CommentScreen from './CommentScreen';
 
 export default class FeedScreen extends Component<{}>{
+  static navigationOptions={
+    header:null
+  }
+
   constructor(props){
     super(props);
     this.state={
