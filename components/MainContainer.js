@@ -15,12 +15,22 @@ export default class MainContainer extends Component<{}>{
       proposals:[],
       userVotes:[],
       categories:[],
-      following:[]
+      following:[],
+      users:[]
     }
     this.listenForVote = this.listenForVote.bind(this);
     this.assignCategories = this.assignCategories.bind(this);
     this.fetchCategories = this.fetchCategories.bind(this);
     this.fetchFollowing = this.fetchFollowing.bind(this);
+    this.fetchUsers = this.fetchUsers.bind(this);
+  }
+
+  fetchUsers(database){
+    database.ref('Users').on('child_added',function(user){
+      let newState = this.state.users;
+      newState.push(user);
+      this.setState({users:newState});
+    }.bind(this));
   }
 
   fetchFollowing(database){
@@ -111,12 +121,13 @@ export default class MainContainer extends Component<{}>{
     this.listenForVote(this.props.database);
     this.fetchCategories(this.props.database);
     this.fetchFollowing(this.props.database);
+    this.fetchUsers(this.props.database);
   }
 
   render(){
       return(
         <TabContainer screenProps={{userVotes:this.state.userVotes,database:this.props.database,proposals:this.state.proposals,user:this.props.user,
-         categories:this.state.categories,following:this.state.following}}/>
+         categories:this.state.categories,following:this.state.following,users:this.state.users}}/>
       );
   }
 }

@@ -11,6 +11,7 @@ import {TabNavigator} from 'react-navigation';
 import {FeedContainer} from './FeedContainer';
 import CategoryScreen from './CategoryScreen';
 import {FollowingContainer} from './FollowingContainer';
+import {UserContainer} from './UserContainer';
 
 export const TabContainer = TabNavigator({
   Home:{
@@ -21,6 +22,9 @@ export const TabContainer = TabNavigator({
   },
   Following:{
     screen: FollowingContainer
+  },
+  Users:{
+    screen: UserContainer
   }
 },{
   tabBarPosition:'bottom',
