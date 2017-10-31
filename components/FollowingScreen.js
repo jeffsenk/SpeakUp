@@ -51,10 +51,6 @@ export default class FollowingScreen extends Component<{}>{
 
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
-        <View style={styles.search}>
-          <Text style={{marginLeft:150,fontSize:20,color:'lightgray'}}>Search... </Text>
-          <IconButton  source={searchIcon}/>
-        </View>
         <FlatList extraData={this.state} data={props.following}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} user={props.user} database={props.database}
          proposal={item} selectProposal={selectProposal} selectComments={selectComments}/> }/>

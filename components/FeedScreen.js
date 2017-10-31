@@ -12,6 +12,7 @@ import IconButton from './IconButton';
 import ProposalContainer from './ProposalContainer';
 import DetailScreen from './DetailScreen';
 import CommentScreen from './CommentScreen';
+import SearchBar from 'react-native-searchbar';
 
 export default class FeedScreen extends Component<{}>{
   static navigationOptions={
@@ -22,13 +23,19 @@ export default class FeedScreen extends Component<{}>{
     super(props);
     this.state={
       userVotes:[],
-      following:{}
+      following:{},
+      filteredProposals:[],
     }
+    this.handleSearchResults = this.handleSearchResults.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
     this.setState({userVotes:nextProps.screenProps.userVotes});
     this.setState({following:nextProps.screenProps.user.val().Following});
+  }
+
+  handleSearchResults(data){
+    this.setState({filteredProposals:data});
   }
 
   render(){
@@ -42,13 +49,30 @@ export default class FeedScreen extends Component<{}>{
       this.props.navigation.navigate('Comment',{selectedComments:comments});
     }.bind(this);
 
+    var searchData = [];
+    for(var i =0;i<props.proposals.length;i++){
+      searchData.push({Name:props.proposals[i].val().Name,Key:props.proposals[i].key});
+    }
+
+    var displayData =[];
+    if(this.state.filteredProposals.length >0){
+    for(var j=0;j<props.proposals.length;j++){
+      for(var k =0;k<this.state.filteredProposals.length;k++){
+        if(props.proposals[j].key == this.state.filteredProposals[k].Key){
+          displayData.push(props.proposals[j]);
+        }
+      }
+    }
+    }else{
+      displayData = props.proposals;
+    }
+
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
-          <Text style={{marginLeft:150,fontSize:20,color:'lightgray'}}>Search... </Text>
-          <IconButton  source={searchIcon}/>
+          <SearchBar hideBack={true}  data={searchData} handleResults={this.handleSearchResults} showOnLoad={true} allDataOnEmptySearch={true} />
         </View>
-        <FlatList extraData={this.state} data={props.proposals}
+        <FlatList extraData={this.state} data={displayData}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} database={props.database}
          user={props.user} proposal={item} selectProposal={selectProposal} selectComments={selectComments} /> }/>
       </View>
