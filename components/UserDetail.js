@@ -13,10 +13,11 @@ export default class UserDetail extends Component<{}>{
 
   render(){
     var props = this.props.navigation.state.params;
+console.log(props.user.val().Name);
     return(
       <View>
-        <Text>This is the Detail Page</Text>
         <Text>{props.user.val().Name}</Text>
+        <Text>{props.user.val().email}</Text>
       </View>
     );
   }

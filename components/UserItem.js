@@ -21,7 +21,7 @@ export default class UserItem extends Component<{}>{
     return(
       <View style={styles.user}>
       <TouchableHighlight underlayColor="white" onPress={this.onPress}>
-        <Text>{this.props.user.val().Name}</Text>
+        <Text style={styles.text}>@{this.props.user.val().Name}</Text>
       </TouchableHighlight>
       </View>
     );
@@ -33,5 +33,8 @@ const styles = StyleSheet.create({
     height:50,
     justifyContent:'center',
     marginLeft:10
+  },
+  text:{
+    color:'blue'
   }
 });

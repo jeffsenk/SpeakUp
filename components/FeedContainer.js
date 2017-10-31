@@ -10,17 +10,17 @@ import {
 import {StackNavigator} from 'react-navigation';
 import FeedScreen from './FeedScreen';
 import DetailScreen from './DetailScreen';
-import CommentScreen from './CommentScreen';
+import {CommentContainer} from './CommentContainer';
 
 export const FeedContainer = StackNavigator({
   Feed:{
     screen: FeedScreen,
   },
-  Detail:{
+  FeedDetail:{
     screen: DetailScreen,
   },
-  Comment:{
-    screen: CommentScreen,
+  FeedComment:{
+    screen: CommentContainer,
   },
 },{
   cardStyle:{

@@ -15,6 +15,7 @@ import NewCommentContainer from './NewCommentContainer';
 import BackHeader from './BackHeader';
 
 export default class CommentScreen extends Component<{}>{
+
   constructor(props){
     super(props);
     this.state={
@@ -46,10 +47,16 @@ export default class CommentScreen extends Component<{}>{
 
   render(){
     var title = "Comments";
+    const props = this.props.screenProps;
+
+    const selectUser = function(user){
+      this.props.navigation.navigate('UserFocus',{user:user});
+    }.bind(this);
+
     return(
       <View style={{flex:1,justifyContent:'space-between'}}>
         <View>
-          <CommentArea comments={this.state.comments} />
+          <CommentArea database={props.database} comments={this.state.comments} selectUser={selectUser}/>
         </View>
         <NewCommentContainer onSend={this.onSend}/>
       </View>

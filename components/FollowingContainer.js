@@ -11,16 +11,16 @@ import {StackNavigator} from 'react-navigation';
 import FollowingScreen from './FollowingScreen';
 import DetailScreen from './DetailScreen';
 import CommentScreen from './CommentScreen';
-
+import {CommentContainer} from './CommentContainer';
 export const FollowingContainer = StackNavigator({
   Following:{
     screen: FollowingScreen,
   },
-  Detail:{
+  FollowingDetail:{
     screen: DetailScreen,
   },
-  Comment:{
-    screen: CommentScreen,
+  FollowingComment:{
+    screen: CommentContainer,
   }
 },{
   cardStyle:{

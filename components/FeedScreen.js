@@ -42,11 +42,11 @@ export default class FeedScreen extends Component<{}>{
     var searchIcon = require('../assets/searchIcon.png');
     const props = this.props.screenProps;
     const selectProposal = function(proposal){
-      this.props.navigation.navigate('Detail',{proposal:proposal});
+      this.props.navigation.navigate('FeedDetail',{proposal:proposal});
     }.bind(this);
 
     const selectComments = function(comments){
-      this.props.navigation.navigate('Comment',{selectedComments:comments});
+      this.props.navigation.navigate('FeedComment',{selectedComments:comments});
     }.bind(this);
 
     var searchData = [];
