@@ -20,15 +20,15 @@ export default class CategoryItem extends Component<{}>{
 
   onPressSubscribe(){
     if(!this.state.subscribed){
-      this.props.database.ref('Users/'+this.props.user.key+'/Subscribed/'+this.props.category.key).set('true');
+      this.props.database.ref('Users/'+this.props.user.key+'/Following/Categories/'+this.props.category.key).set('true');
     }else{
-      this.props.database.ref('Users/'+this.props.user.key+'/Subscribed/'+this.props.category.key).remove();
+      this.props.database.ref('Users/'+this.props.user.key+'/Following/Categories/'+this.props.category.key).remove();
     }
   }
 
   compareSubscribed(props){
     var match = false;
-    for(key in props.user.val().Subscribed){
+    for(key in props.user.child('Following/Categories').val()){
       if(key == props.category.key){
         match=true;
         this.setState({subscribed:true});

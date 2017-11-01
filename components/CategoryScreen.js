@@ -18,7 +18,7 @@ export default class CategoryScreen extends Component<{}>{
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({subscribed:nextProps.screenProps.user.val().Subscribed});
+    this.setState({subscribed:nextProps.screenProps.user.child('Following/Categories').val()});
   }
 
   render(){

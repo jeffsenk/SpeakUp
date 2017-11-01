@@ -35,6 +35,7 @@ export const TabContainer = TabNavigator({
       backgroundColor:'transparent'
     },
     labelStyle:{
+      fontSize:12,
       color:'black'
     },
     tabStyle:{

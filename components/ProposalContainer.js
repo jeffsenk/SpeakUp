@@ -26,9 +26,9 @@ export default class ProposalContainer extends Component<{}>{
 
   onPressFollowing(){
     if(!this.state.following){
-      this.props.database.ref('Users/'+this.props.user.key+'/Following/'+this.props.proposal.key).set('true');
+      this.props.database.ref('Users/'+this.props.user.key+'/Following/Proposals/'+this.props.proposal.key).set('true');
     }else{
-      this.props.database.ref('Users/'+this.props.user.key+'/Following/'+this.props.proposal.key).remove();
+      this.props.database.ref('Users/'+this.props.user.key+'/Following/Proposals/'+this.props.proposal.key).remove();
     }
   }
 
@@ -62,7 +62,7 @@ export default class ProposalContainer extends Component<{}>{
 
   compareFollowing(props){
     var match = false;
-    for(key in props.user.val().Following){
+    for(key in props.user.child('Following/Proposals').val()){
       if(key == props.proposal.key){
         match = true;
         this.setState({following:true});
