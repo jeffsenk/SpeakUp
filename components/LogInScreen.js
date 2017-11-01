@@ -14,6 +14,7 @@ export default class LogInBox extends Component<{}> {
     super(props);
     this.state = {email:"",password:""}
     this.toggleSignIn = this.toggleSignIn.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
   }
 
   toggleSignIn(){
@@ -36,13 +37,34 @@ export default class LogInBox extends Component<{}> {
     }
   }
 
+  handleSignUp(){
+    if (this.props.auth.currentUser){
+      this.props.auth.signOut();
+    }else{
+      this.props.auth.createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(user){
+        this.props.database.ref('Users/'+user.uid).set(true);
+        this.props.database.ref('Users/'+user.uid+'/Name').set(this.state.email);
+        this.props.database.ref('Users/'+user.uid+'/email').set(this.state.email);
+        this.props.database.ref('Users/'+user.uid+'/Following/Users/JrEg1g2It0ZkY0T0voOAuQLKwKA3').set(true);
+        this.props.database.ref('Users/'+user.uid+'/Following/Categories/Sports').set(true);
+        this.props.database.ref('Users/'+user.uid+'/Following/Categories/Politics').set(true);
+        this.props.database.ref('Users/'+user.uid+'/Following/Categories/Tech').set(true);
+      }.bind(this),function(error){
+        alert(error.message);
+      });
+    }
+  }
+
   render(){
     return (
-      <View style={{alignItems:'center'}}>
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
         <Text style={styles.title} >SpeakUp</Text>
         <TextInput style={styles.input} value={this.state.email} onChangeText={(text)=>this.setState({email:text})} placeholder="Email"/>
         <TextInput style={styles.input} value={this.state.password} onChangeText={(text)=>this.setState({password:text})} placeholder="Password"/>
-        <Button onPress={this.toggleSignIn} title="Sign In"/>
+        <View style={styles.buttons}>
+          <Button onPress={this.toggleSignIn} title="Sign In"/>
+          <Button onPress={this.handleSignUp} title="Sign Up"/>
+        </View>
       </View>
     );
   }
@@ -55,5 +77,12 @@ const styles = StyleSheet.create({
   title:{
     fontSize:40,
     marginBottom:50
-  }
+  },
+  buttons:{
+    marginTop:20,
+    width:200,
+    flexDirection:'row',
+    justifyContent:'space-between'
+  },
+
 });

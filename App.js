@@ -62,7 +62,7 @@ export default class App extends Component<{}> {
     }
     return (
       <View style={styles.container}>
-        <LogInScreen auth={firebase.auth()}/>
+        <LogInScreen database={firebase.database()} auth={firebase.auth()}/>
       </View>
     );
   }
