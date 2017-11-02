@@ -13,6 +13,7 @@ import ProposalContainer from './ProposalContainer';
 import DetailScreen from './DetailScreen';
 import CommentScreen from './CommentScreen';
 import SearchBar from 'react-native-searchbar';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class FeedScreen extends Component<{}>{
   static navigationOptions={
@@ -84,7 +85,7 @@ export default class FeedScreen extends Component<{}>{
     const selectComments = function(comments){
       this.props.navigation.navigate('FeedComment',{selectedComments:comments});
     }.bind(this);
-
+if(this.state.displayData.length>0){
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
@@ -93,6 +94,12 @@ export default class FeedScreen extends Component<{}>{
         <FlatList extraData={this.state} data={this.state.displayData}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} database={props.database}
          user={props.user} proposal={item} selectProposal={selectProposal} selectComments={selectComments} /> }/>
+      </View>
+    );
+}
+    return(
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <Icon name='bullhorn' size={70} color='salmon'/>
       </View>
     );
   }
