@@ -63,6 +63,7 @@ export default class UserScreen extends Component<{}>{
         <View style={styles.search}>
           <SearchBar hideBack={true}  data={searchData} handleResults={this.handleSearchResults} showOnLoad={true} allDataOnEmptySearch={true} />
         </View>
+        <Text style={styles.title}>Users</Text>
         <FlatList extraData={this.state} data={displayData}
          renderItem={({item})=> <UserItem database={props.database}
          thisUser={props.user} user={item} selectUser={selectUser} /> }/>
@@ -81,5 +82,11 @@ const styles = StyleSheet.create({
     height:50,
     borderBottomWidth:1,
     borderBottomColor:'lightgray'
+  },
+  title:{
+    marginLeft:10,
+    fontSize:25,
+    marginTop:10,
+    marginBottom:20
   }
 });

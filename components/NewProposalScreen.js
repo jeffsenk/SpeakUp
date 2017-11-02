@@ -72,10 +72,10 @@ export default class NewProposalScreen extends Component<{}>{
         </Picker>
         </View>
         <Text style={styles.label} >Name</Text>
-        <TextInput underlineColorAndroid={'transparent'} style={styles.input}
+        <TextInput maxLength={60} underlineColorAndroid={'transparent'} style={styles.input}
          onChangeText={(text)=>this.setState({name:text})} value={this.state.name}/>
         <Text style={styles.label} >Description</Text>
-        <TextInput underlineColorAndroid={'transparent'} style={styles.bigInput}
+        <TextInput multiline={true} underlineColorAndroid={'transparent'} style={styles.bigInput}
          onChangeText={(text)=>this.setState({description:text})} value={this.state.description}/>
         <Text style={styles.label} >Argument Pro</Text>
         <TextInput underlineColorAndroid={'transparent'} style={styles.bigInput}
@@ -104,6 +104,8 @@ const styles = StyleSheet.create({
     height:20
   },
   bigInput:{
+    textAlignVertical:'top',
+    flex:1,
     borderWidth:1,
     borderColor:'lightgray',
     marginLeft:10,

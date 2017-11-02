@@ -13,13 +13,40 @@ export default class UserDetail extends Component<{}>{
 
   render(){
     var props = this.props.navigation.state.params;
-console.log(props.user.val().Name);
+    let proposalsCount = 0;
+    let voteCount =0;
+    let commentCount =0;
+
+    if(props.user.val().Proposals){
+       proposalsCount = Object.keys(props.user.val().Proposals).length;
+    }
+    if(props.user.val().Votes){
+       voteCount = Object.keys(props.user.val().Votes).length;
+    }
+    if(props.user.val().Comments){
+      commentCount = Object.keys(props.user.val().Comments).length;
+    }
+
     return(
       <View>
-        <Text>{props.user.val().Name}</Text>
-        <Text>{props.user.val().email}</Text>
+        <Text style={styles.name}>{props.user.val().Name}</Text>
+        <Text style={styles.stat}>Proposals: {proposalsCount} </Text>
+        <Text style={styles.stat}>Votes: {voteCount} </Text>
+        <Text style={styles.stat}>Comments: {commentCount} </Text>
       </View>
     );
   }
 
 }
+
+const styles = StyleSheet.create({
+  name:{
+    marginTop:10,
+    marginBottom:10,
+    marginLeft:10,
+    fontSize:20
+  },
+  stat:{
+    marginLeft:10
+  }
+});
