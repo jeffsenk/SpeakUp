@@ -12,6 +12,7 @@ import {FeedContainer} from './FeedContainer';
 import CategoryScreen from './CategoryScreen';
 import {FollowingContainer} from './FollowingContainer';
 import {UserContainer} from './UserContainer';
+import NewProposalScreen from './NewProposalScreen';
 
 export const TabContainer = TabNavigator({
   Home:{
@@ -25,6 +26,9 @@ export const TabContainer = TabNavigator({
   },
   Users:{
     screen: UserContainer
+  },
+  New:{
+    screen: NewProposalScreen
   }
 },{
   tabBarPosition:'bottom',
