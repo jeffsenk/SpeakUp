@@ -13,6 +13,7 @@ import DetailScreen from './DetailScreen';
 import {CommentContainer} from './CommentContainer';
 
 export const FeedContainer = StackNavigator({
+
   Feed:{
     screen: FeedScreen,
   },

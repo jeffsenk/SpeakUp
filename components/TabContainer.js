@@ -13,34 +13,58 @@ import CategoryScreen from './CategoryScreen';
 import {FollowingContainer} from './FollowingContainer';
 import {UserContainer} from './UserContainer';
 import NewProposalScreen from './NewProposalScreen';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const TabContainer = TabNavigator({
   Home:{
     screen: FeedContainer,
+    navigationOptions:({navigation})=>({
+      tabBarIcon:({tintColor})=>(
+        <Icon name='bullhorn' size={25} />
+      )
+    }),
   },
   Categories:{
-    screen: CategoryScreen
+    screen: CategoryScreen,
+    navigationOptions:({navigation})=>({
+      tabBarIcon:({tintColor})=>(
+        <Icon name='check' size={25} />
+      )
+    }),
   },
   Following:{
-    screen: FollowingContainer
+    screen: FollowingContainer,
+    navigationOptions:({navigation})=>({
+      tabBarIcon:({tintColor})=>(
+        <Icon name='star' size={25} />
+      )
+    }),
   },
   Users:{
-    screen: UserContainer
+    screen: UserContainer,
+    navigationOptions:({navigation})=>({
+      tabBarIcon:({tintColor})=>(
+        <Icon name='user' size={25} />
+      )
+    }),
   },
   New:{
-    screen: NewProposalScreen
+    screen: NewProposalScreen,
+    navigationOptions:({navigation})=>({
+      tabBarIcon:({tintColor})=>(
+        <Icon name='plus' size={25} />
+      )
+    }),
   }
 },{
   tabBarPosition:'bottom',
   animationEnabled:true,
   tabBarOptions:{
+    showLabel:false,
+    showIcon:true,
     pressColor:'lightgray',
     style:{
       backgroundColor:'transparent'
-    },
-    labelStyle:{
-      fontSize:12,
-      color:'black'
     },
     tabStyle:{
       borderTopWidth:1,

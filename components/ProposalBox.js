@@ -9,6 +9,7 @@ import {
   Alert
 } from 'react-native';
 import IconButton from './IconButton';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class ProposalBox extends Component<{}>{
   constructor(props){
@@ -31,10 +32,13 @@ export default class ProposalBox extends Component<{}>{
   }
 
   render(){
-    var followIcon = this.props.following ? require('../assets/postFollow.png') : require('../assets/preFollow.png');
-    var upVoteIcon = this.props.upVote ? require('../assets/postUpVote.png') : require('../assets/preUpVote.jpg');
-    var downVoteIcon = this.props.downVote ? require('../assets/postDownVote.png') : require('../assets/preDownVote.png');
+    var followName = this.props.following ? 'star' : 'star-o';
+    var downVoteName = 'arrow-down'
+    var upVoteName = 'arrow-up'
 
+    var followColor = this.props.following ? 'gold' : 'gray'
+    var downColor = this.props.downVote ? 'salmon' : 'lightgray'
+    var upColor = this.props.upVote ? 'cornflowerblue' : 'lightgray'
 
     var upVotes = 0;
     var downVotes = 0;
@@ -70,7 +74,7 @@ export default class ProposalBox extends Component<{}>{
       <View style={styles.outer}>
         <View style={styles.topRow}>
           <Text>{this.props.proposal.val().Category} - {this.props.proposal.val().GroupName}</Text>
-          <IconButton onPress={this.props.onPressFollowing} source={followIcon}/>
+          <IconButton onPress={this.props.onPressFollowing} source={followName} color={followColor}/> 
         </View>
         <TouchableHighlight underlayColor="white" onPress={this.onSelectProposal}>
           <Text style={styles.title}>{this.props.proposal.val().Name}</Text>
@@ -78,7 +82,7 @@ export default class ProposalBox extends Component<{}>{
         <View style={styles.stats}>
           <View>
             <View style={{marginBottom:5,flexDirection:'row'}}>
-              <IconButton onPress={this.props.onPressUpVote} source={upVoteIcon}/>
+              <IconButton onPress={this.props.onPressUpVote} source={upVoteName} color={upColor}/>
               <Text style={{color:'cornflowerblue'}}>{proPer}% </Text>
             </View>
             <Text style={styles.votes}> {upVotes} UpVotes</Text>
@@ -89,7 +93,7 @@ export default class ProposalBox extends Component<{}>{
           <View style={{marginRight:10}}>
             <View style={{marginBottom:5,flexDirection:'row',justifyContent:'flex-end'}}>
               <Text style={{color:'salmon'}}>{conPer}% </Text>
-              <IconButton onPress={this.props.onPressDownVote} source={downVoteIcon}/>
+              <IconButton onPress={this.props.onPressDownVote} source={downVoteName} color={downColor}/>
             </View>
             <Text style={styles.votes} >{downVotes} DownVotes</Text>
             <TouchableHighlight underlayColor="white" onPress={this.onSelectConComments}>
