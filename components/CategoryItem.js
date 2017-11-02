@@ -49,10 +49,11 @@ export default class CategoryItem extends Component<{}>{
   }
 
   render(){
-    var followIcon = this.state.subscribed ? require('../assets/postFollow.png') : require('../assets/preFollow.png');
+    var followIcon = this.state.subscribed ? 'check-square' : 'square-o';
+    var followColor = 'black';
     return(
       <View style={styles.main}>
-        <IconButton onPress={this.onPressSubscribe} source={followIcon}/>
+        <IconButton onPress={this.onPressSubscribe} source={followIcon} color={followColor}/>
         <Text style={styles.label} >{this.props.category.key}</Text>
       </View>
     );

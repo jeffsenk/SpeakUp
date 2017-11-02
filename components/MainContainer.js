@@ -5,7 +5,6 @@ import {
   Image,
   Text
 } from 'react-native';
-import MainSelector from './MainSelector';
 import {TabContainer} from './TabContainer';
 
 export default class MainContainer extends Component<{}>{

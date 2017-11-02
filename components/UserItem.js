@@ -54,13 +54,15 @@ export default class UserItem extends Component<{}>{
   }
 
   render(){
-    var followIcon = this.state.subscribed ? require('../assets/postFollow.png') : require('../assets/preFollow.png');
+    var followIcon = this.state.subscribed ? 'check-square' : 'square-o';
+    var followColor = 'black';
+
     return(
       <View style={styles.user}>
         <TouchableHighlight underlayColor="white" onPress={this.onPress}>
           <Text style={styles.text}>@{this.props.user.val().Name}</Text>
         </TouchableHighlight>
-        <IconButton onPress={this.onPressSubscribe} source={followIcon}/>
+        <IconButton onPress={this.onPressSubscribe} source={followIcon} color={followColor}/>
       </View>
     );
   }

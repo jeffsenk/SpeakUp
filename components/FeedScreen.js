@@ -25,21 +25,57 @@ export default class FeedScreen extends Component<{}>{
       userVotes:[],
       following:{},
       filteredProposals:[],
+      simplifiedProposals:[],
+      displayData:[]
     }
     this.handleSearchResults = this.handleSearchResults.bind(this);
+    this.simplifyProposals = this.simplifyProposals.bind(this);
+    this.getDisplayData = this.getDisplayData.bind(this);
+  }
+
+  simplifyProposals(props){
+    let searchData =[];
+    for(var i =0;i<props.proposals.length;i++){
+      searchData.push({Name:props.proposals[i].val().Name,Key:props.proposals[i].key});
+    }
+    this.setState({simplifiedProposals:searchData});
+  }
+
+  getDisplayData(props){
+    if(this.state.filteredProposals.length >0){
+      let displayData =[];
+      for(var j=0;j<props.proposals.length;j++){
+        for(var k =0;k<this.state.filteredProposals.length;k++){
+          if(props.proposals[j].key == this.state.filteredProposals[k].Key){
+            displayData.push(props.proposals[j]);
+          }
+        }
+      }
+      this.setState({displayData:displayData});
+    }else{
+      this.setState({displayData:props.proposals});
+    }
+  }
+
+  componentDidMount(){
+    this.simplifyProposals(this.props.screenProps);
+    this.getDisplayData(this.props.screenProps);
   }
 
   componentWillReceiveProps(nextProps){
     this.setState({userVotes:nextProps.screenProps.userVotes});
     this.setState({following:nextProps.screenProps.user.val().Following});
+    this.simplifyProposals(nextProps.screenProps);
+    this.getDisplayData(nextProps.screenProps);
   }
 
   handleSearchResults(data){
     this.setState({filteredProposals:data});
+    this.getDisplayData(this.props.screenProps);
   }
 
+
   render(){
-    var searchIcon = require('../assets/searchIcon.png');
     const props = this.props.screenProps;
     const selectProposal = function(proposal){
       this.props.navigation.navigate('FeedDetail',{proposal:proposal});
@@ -49,30 +85,12 @@ export default class FeedScreen extends Component<{}>{
       this.props.navigation.navigate('FeedComment',{selectedComments:comments});
     }.bind(this);
 
-    var searchData = [];
-    for(var i =0;i<props.proposals.length;i++){
-      searchData.push({Name:props.proposals[i].val().Name,Key:props.proposals[i].key});
-    }
-
-    var displayData =[];
-    if(this.state.filteredProposals.length >0){
-    for(var j=0;j<props.proposals.length;j++){
-      for(var k =0;k<this.state.filteredProposals.length;k++){
-        if(props.proposals[j].key == this.state.filteredProposals[k].Key){
-          displayData.push(props.proposals[j]);
-        }
-      }
-    }
-    }else{
-      displayData = props.proposals;
-    }
-
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
-          <SearchBar hideBack={true}  data={searchData} handleResults={this.handleSearchResults} showOnLoad={true} allDataOnEmptySearch={true} />
+          <SearchBar hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults} showOnLoad={true} />
         </View>
-        <FlatList extraData={this.state} data={displayData}
+        <FlatList extraData={this.state} data={this.state.displayData}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} database={props.database}
          user={props.user} proposal={item} selectProposal={selectProposal} selectComments={selectComments} /> }/>
       </View>

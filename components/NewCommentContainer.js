@@ -23,7 +23,7 @@ export default class NewCommentContainer extends Component<{}>{
   }
 
   render(){
-    sendIcon = require('../assets/sendIcon.png');
+    var sendIcon = 'paper-plane-o';
     return(
       <View style={styles.main}>
         <TextInput placeholder="Type a message"  underlineColorAndroid={'transparent'} style={styles.input}
