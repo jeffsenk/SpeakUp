@@ -17,15 +17,18 @@ export default class DetailScreen extends Component<{}>{
 
   render(){
     var title = "Details";
+    var props = this.props.navigation.state.params;
     return(
-      <View>
-        <BackHeader onPress={this.props.deselectProposal} returnIcon={this.props.returnIcon} title={title}/>
+      <ScrollView>
         <View style={styles.detail}>
-          <Text style={styles.paragraph}>{this.props.proposal.val().Description}</Text>
-          <Text style={styles.paragraph}>{this.props.proposal.val().ArgumentPro}</Text>
-          <Text style={styles.paragraph}>{this.props.proposal.val().ArgumentCon}</Text>
+          <Text style={styles.title}>{props.proposal.val().Name}</Text>
+          <Text style={styles.paragraph}>{props.proposal.val().Description}</Text>
+          <Text style={styles.label}>Pro</Text>
+          <Text style={styles.paragraph}>{props.proposal.val().ArgumentPro}</Text>
+          <Text style={styles.label}>Con</Text>
+          <Text style={styles.paragraph}>{props.proposal.val().ArgumentCon}</Text>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -51,5 +54,13 @@ const styles = StyleSheet.create({
   },
   paragraph:{
     marginBottom:10
+  },
+  title:{
+    marginBottom:10,
+    fontSize:25
+  },
+  label:{
+    marginBottom:10,
+    fontSize:20
   }
 });

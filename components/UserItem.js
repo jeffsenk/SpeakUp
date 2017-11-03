@@ -3,33 +3,38 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View
 } from 'react-native';
-
 import IconButton from './IconButton';
 
-export default class CategoryItem extends Component<{}>{
+export default class UserItem extends Component<{}>{
   constructor(props){
     super(props);
     this.state={
       subscribed:false
     }
+    this.onPress = this.onPress.bind(this);
     this.onPressSubscribe = this.onPressSubscribe.bind(this);
     this.compareSubscribed = this.compareSubscribed.bind(this);
   }
 
+  onPress(){
+    this.props.selectUser(this.props.user)
+  }
+
   onPressSubscribe(){
     if(!this.state.subscribed){
-      this.props.database.ref('Users/'+this.props.user.key+'/Following/Categories/'+this.props.category.key).set('true');
+      this.props.database.ref('Users/'+this.props.thisUser.key+'/Following/Users/'+this.props.user.key).set('true');
     }else{
-      this.props.database.ref('Users/'+this.props.user.key+'/Following/Categories/'+this.props.category.key).remove();
+      this.props.database.ref('Users/'+this.props.thisUser.key+'/Following/Users/'+this.props.user.key).remove();
     }
   }
 
   compareSubscribed(props){
     var match = false;
-    for(key in props.user.child('Following/Categories').val()){
-      if(key == props.category.key){
+    for(key in props.thisUser.child('Following/Users').val()){
+      if(key == props.user.key){
         match=true;
         this.setState({subscribed:true});
         break;
@@ -51,23 +56,28 @@ export default class CategoryItem extends Component<{}>{
   render(){
     var followIcon = this.state.subscribed ? 'check-square' : 'square-o';
     var followColor = 'black';
+
     return(
-      <View style={styles.main}>
+      <View style={styles.user}>
+        <TouchableHighlight underlayColor="white" onPress={this.onPress}>
+          <Text style={styles.text}>@{this.props.user.val().Name}</Text>
+        </TouchableHighlight>
         <IconButton onPress={this.onPressSubscribe} source={followIcon} color={followColor}/>
-        <Text style={styles.label} >{this.props.category.key}</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  main:{
+  user:{
     flexDirection:'row',
-    marginBottom:40,
-    alignItems:'center'
+    justifyContent:'space-between',
+    height:50,
+    alignItems:'center',
+    marginRight:10,
+    marginLeft:10
   },
-  label:{
-    marginLeft:10,
-    fontSize:18
+  text:{
+    color:'blue'
   }
 });

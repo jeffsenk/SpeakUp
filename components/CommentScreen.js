@@ -15,6 +15,7 @@ import NewCommentContainer from './NewCommentContainer';
 import BackHeader from './BackHeader';
 
 export default class CommentScreen extends Component<{}>{
+
   constructor(props){
     super(props);
     this.state={
@@ -24,19 +25,19 @@ export default class CommentScreen extends Component<{}>{
   }
 
   onSend(content){
-    let newKey = this.props.database.ref('Comments').push({
-      Author:this.props.user.key,
-      AuthorName:this.props.user.val().Name,
-      Proposal:this.props.selectedComments.ref.parent.key,
+    let newKey = this.props.screenProps.database.ref('Comments').push({
+      Author:this.props.screenProps.user.key,
+      AuthorName:this.props.screenProps.user.val().Name,
+      Proposal:this.props.navigation.state.params.selectedComments.ref.parent.key,
       Content:content
     }).key;
-    this.props.selectedComments.ref.child(newKey).set(true);
-    this.props.database.ref('Users/'+this.props.user.key+'/Comments/'+newKey).set(true);
+    this.props.navigation.state.params.selectedComments.ref.child(newKey).set(true);
+    this.props.screenProps.database.ref('Users/'+this.props.screenProps.user.key+'/Comments/'+newKey).set(true);
   }
 
   componentDidMount(){
-    this.props.selectedComments.ref.on('child_added',function(snapShot){
-      this.props.database.ref('Comments/'+snapShot.key).once('value').then(function(data){
+    this.props.navigation.state.params.selectedComments.ref.on('child_added',function(snapShot){
+      this.props.screenProps.database.ref('Comments/'+snapShot.key).once('value').then(function(data){
         let newState=this.state.comments;
         newState.push(data);
         this.setState({comments:newState});
@@ -46,11 +47,16 @@ export default class CommentScreen extends Component<{}>{
 
   render(){
     var title = "Comments";
+    const props = this.props.screenProps;
+
+    const selectUser = function(user){
+      this.props.navigation.navigate('UserFocus',{user:user});
+    }.bind(this);
+
     return(
       <View style={{flex:1,justifyContent:'space-between'}}>
         <View>
-          <BackHeader onPress={this.props.deselectComments} returnIcon={this.props.returnIcon} title={title}/>
-          <CommentArea comments={this.state.comments} />
+          <CommentArea database={props.database} comments={this.state.comments} selectUser={selectUser}/>
         </View>
         <NewCommentContainer onSend={this.onSend}/>
       </View>

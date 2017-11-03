@@ -13,34 +13,58 @@ import DetailScreen from './DetailScreen';
 import CommentScreen from './CommentScreen';
 
 export default class FollowingScreen extends Component<{}>{
+  static navigationOptions={
+    header:null
+  }
+
   constructor(props){
     super(props);
     this.state={
       userVotes:[],
-      following:{},
-      proposals:[]
+      following:[],
     }
+    this.fetchFollowingProposals = this.fetchFollowingProposals.bind(this);
+  }
+
+  fetchFollowingProposals(props){
+    props.user.child('Following/Proposals').ref.on('child_added',function(data){
+      props.database.ref('Proposals/'+data.key).once('value').then(function(snapShot){
+        let newState = this.state.following;
+        newState.push(snapShot);
+        this.setState({following:newState});
+      }.bind(this));
+    }.bind(this));
+    props.user.child('Following/Proposals').ref.on('child_removed',function(data){
+      for(var i =0;i<this.state.following.length;i++){
+        if(this.state.following[i].key == data.key){
+          let newState = this.state.following;
+          newState.splice(i,1);
+          this.setState({following:newState});
+          break;
+        }
+      }
+    }.bind(this));
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({userVotes:nextProps.user.val().Votes});
-    this.setState({following:nextProps.user.val().Following});
+    this.setState({userVotes:nextProps.screenProps.user.val().Votes});
   }
 
   componentDidMount(){
-    for(key in this.props.user.val().Following){
-      this.props.database.ref('Proposals/'+key).once('value').then(function(snapShot){
-        let newState = this.state.proposals;
-        newState.push(snapShot);
-        this.setState({proposals:newState});
-      }.bind(this));
-    }
+    this.fetchFollowingProposals(this.props.screenProps);
   }
 
   render(){
-    var searchIcon = require('../assets/searchIcon.png');
+    const props = this.props.screenProps;
+    const selectProposal = function(proposal){
+      this.props.navigation.navigate('FollowingDetail',{proposal:proposal});
+    }.bind(this);
 
-    if(this.state.proposals.length ==0 ){
+    const selectComments = function(comments){
+      this.props.navigation.navigate('FollowingComment',{selectedComments:comments});
+    }.bind(this);
+
+    if(this.state.following.length ==0 ){
       return(
         <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
           <Text style={{fontSize:15}}> You are not currently following any Proposals </Text>
@@ -50,13 +74,10 @@ export default class FollowingScreen extends Component<{}>{
 
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
-        <View style={styles.search}>
-          <Text style={{marginLeft:150,fontSize:20,color:'lightgray'}}>Search... </Text>
-          <IconButton  source={searchIcon}/>
-        </View>
-        <FlatList extraData={this.state} data={this.state.proposals}
-         renderItem={({item})=> <ProposalContainer userVotes={this.props.userVotes} user={this.props.user} database={this.props.database}
-         proposal={item} selectComments={this.props.selectComments} selectProposal={this.props.selectProposal}/> }/>
+        <Text style={styles.title}>Following</Text>
+        <FlatList extraData={this.state} data={this.state.following}
+         renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} user={props.user} database={props.database}
+         proposal={item} selectProposal={selectProposal} selectComments={selectComments}/> }/>
       </View>
     );
   }
@@ -71,5 +92,11 @@ const styles = StyleSheet.create({
     height:50,
     borderBottomWidth:1,
     borderBottomColor:'lightgray'
+  },
+  title:{
+    marginLeft:10,
+    marginTop:10,
+    fontSize:25,
+    marginBottom:20
   }
 });

@@ -26,7 +26,7 @@ export default class CommentArea extends Component<{}>{
       return(
       <View style={styles.main}>
         <FlatList extraData={this.state} data={this.props.comments} renderItem={({item})=>
-          <CommentItem comment={item}/>
+          <CommentItem database={this.props.database} selectUser={this.props.selectUser} comment={item}/>
         }/>
       </View>
       );
