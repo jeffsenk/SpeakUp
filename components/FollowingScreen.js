@@ -21,17 +21,40 @@ export default class FollowingScreen extends Component<{}>{
     super(props);
     this.state={
       userVotes:[],
-      following:{},
+      following:[],
     }
+    this.fetchFollowingProposals = this.fetchFollowingProposals.bind(this);
+  }
+
+  fetchFollowingProposals(props){
+    props.user.child('Following/Proposals').ref.on('child_added',function(data){
+      props.database.ref('Proposals/'+data.key).once('value').then(function(snapShot){
+        let newState = this.state.following;
+        newState.push(snapShot);
+        this.setState({following:newState});
+      }.bind(this));
+    }.bind(this));
+    props.user.child('Following/Proposals').ref.on('child_removed',function(data){
+      for(var i =0;i<this.state.following.length;i++){
+        if(this.state.following[i].key == data.key){
+          let newState = this.state.following;
+          newState.splice(i,1);
+          this.setState({following:newState});
+          break;
+        }
+      }
+    }.bind(this));
   }
 
   componentWillReceiveProps(nextProps){
     this.setState({userVotes:nextProps.screenProps.user.val().Votes});
-    this.setState({following:nextProps.screenProps.user.val().Following});
+  }
+
+  componentDidMount(){
+    this.fetchFollowingProposals(this.props.screenProps);
   }
 
   render(){
-    var searchIcon = require('../assets/searchIcon.png');
     const props = this.props.screenProps;
     const selectProposal = function(proposal){
       this.props.navigation.navigate('FollowingDetail',{proposal:proposal});
@@ -41,7 +64,7 @@ export default class FollowingScreen extends Component<{}>{
       this.props.navigation.navigate('FollowingComment',{selectedComments:comments});
     }.bind(this);
 
-    if(props.following.length ==0 ){
+    if(this.state.following.length ==0 ){
       return(
         <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
           <Text style={{fontSize:15}}> You are not currently following any Proposals </Text>
@@ -52,7 +75,7 @@ export default class FollowingScreen extends Component<{}>{
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <Text style={styles.title}>Following</Text>
-        <FlatList extraData={this.state} data={props.following}
+        <FlatList extraData={this.state} data={this.state.following}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} user={props.user} database={props.database}
          proposal={item} selectProposal={selectProposal} selectComments={selectComments}/> }/>
       </View>

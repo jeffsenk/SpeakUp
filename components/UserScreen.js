@@ -20,51 +20,77 @@ export default class UserScreen extends Component<{}>{
     super(props);
     this.state={
       users:[],
-      filteredUsers:[]
+      filteredUsers:[],
+      simplifiedUsers:[],
+      displayData:[]
     }
     this.handleSearchResults = this.handleSearchResults.bind(this);
+    this.simplifyUsers = this.simplifyUsers.bind(this);
+    this.getDisplayData = this.getDisplayData.bind(this);
+    this.fetchUsers = this.fetchUsers.bind(this);
+  }
+
+  fetchUsers(database){
+    database.ref('Users').on('child_added',function(user){
+      let newState = this.state.users;
+      newState.push(user);
+      this.setState({users:newState});
+    }.bind(this));
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({users:nextProps.screenProps.users});
+    this.simplifyUsers(nextProps.screenProps);
+    this.getDisplayData(nextProps.screenProps);
+  }
+
+  componentDidMount(){
+    this.fetchUsers(this.props.screenProps.database);
+    this.simplifyUsers(this.props.screenProps);
+    this.getDisplayData(this.props.screenProps);
   }
 
   handleSearchResults(data){
     this.setState({filteredUsers:data});
+    this.getDisplayData(this.props.screenProps);
+  }
+
+  simplifyUsers(props){
+    var searchData = [];
+    for(var i =0;i<this.state.users.length;i++){
+      searchData.push({Name:this.state.users[i].val().Name,Key:this.state.users[i].key});
+    }
+    this.setState({simplifiedUsers:searchData});
+  }
+
+  getDisplayData(props){
+    if(this.state.filteredUsers.length >0){
+      var displayData =[];
+      for(var j=0;j<this.state.users.length;j++){
+        for(var k =0;k<this.state.filteredUsers.length;k++){
+          if(this.state.users[j].key == this.state.filteredUsers[k].Key){
+            displayData.push(this.state.users[j]);
+          }
+        }
+      }
+      this.setState({displayData:displayData});
+    }else{
+      this.setState({displayData:this.state.users});
+    }
   }
 
   render(){
     const props = this.props.screenProps;
-
     const selectUser = function(user){
       this.props.navigation.navigate('UserDetail',{user:user});
     }.bind(this);
 
-    var searchData = [];
-    for(var i =0;i<props.users.length;i++){
-      searchData.push({Name:props.users[i].val().Name,Key:props.users[i].key});
-    }
-
-    var displayData =[];
-    if(this.state.filteredUsers.length >0){
-    for(var j=0;j<props.users.length;j++){
-      for(var k =0;k<this.state.filteredUsers.length;k++){
-        if(props.users[j].key == this.state.filteredUsers[k].Key){
-          displayData.push(props.users[j]);
-        }
-      }
-    }
-    }else{
-      displayData = props.users;
-    }
-
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
-          <SearchBar hideBack={true}  data={searchData} handleResults={this.handleSearchResults} showOnLoad={true} allDataOnEmptySearch={true} />
+          <SearchBar hideBack={true}  data={this.state.simplifiedUsers} handleResults={this.handleSearchResults} showOnLoad={true}  />
         </View>
         <Text style={styles.title}>Users</Text>
-        <FlatList extraData={this.state} data={displayData}
+        <FlatList extraData={this.state} data={this.state.displayData}
          renderItem={({item})=> <UserItem database={props.database}
          thisUser={props.user} user={item} selectUser={selectUser} /> }/>
       </View>

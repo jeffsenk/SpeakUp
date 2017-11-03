@@ -14,14 +14,9 @@ export default class MainContainer extends Component<{}>{
       proposals:[],
       userVotes:[],
       categories:[],
-      following:[],
-      users:[]
     }
     this.listenForVote = this.listenForVote.bind(this);
     this.fetchFollowingCategories = this.fetchFollowingCategories.bind(this);
-    this.fetchCategories = this.fetchCategories.bind(this);
-    this.fetchFollowingProposals = this.fetchFollowingProposals.bind(this);
-    this.fetchUsers = this.fetchUsers.bind(this);
     this.fetchFollowingUsers = this.fetchFollowingUsers.bind(this);
   }
 
@@ -63,44 +58,6 @@ export default class MainContainer extends Component<{}>{
         }
       }
       this.setState({proposals:newState});
-    }.bind(this));
-  }
-
-  fetchUsers(database){
-    database.ref('Users').on('child_added',function(user){
-      let newState = this.state.users;
-      newState.push(user);
-      this.setState({users:newState});
-    }.bind(this));
-  }
-
-  fetchFollowingProposals(database){
-    this.props.user.child('Following/Proposals').ref.on('child_added',function(data){
-      database.ref('Proposals/'+data.key).once('value').then(function(snapShot){
-        let newState = this.state.following;
-        newState.push(snapShot);
-        this.setState({following:newState});
-      }.bind(this));
-    }.bind(this));
-    this.props.user.child('Following/Proposals').ref.on('child_removed',function(data){
-      for(var i =0;i<this.state.following.length;i++){
-        if(this.state.following[i].key == data.key){
-          let newState = this.state.following;
-          newState.splice(i,1);
-          this.setState({following:newState});
-          break;
-        }
-      }
-    }.bind(this));
-  }
-
-  fetchCategories(database){
-    database.ref('Categories').once('value').then(function(snapShot){
-      snapShot.forEach(function(category){
-        let newState = this.state.categories;
-        newState.push(category);
-        this.setState({categories:newState});
-      }.bind(this));
     }.bind(this));
   }
 
@@ -164,17 +121,13 @@ export default class MainContainer extends Component<{}>{
 
   componentDidMount(){
     this.fetchFollowingCategories(this.props.database);
-    this.listenForVote(this.props.database);
-    this.fetchCategories(this.props.database);
-    this.fetchFollowingProposals(this.props.database);
-    this.fetchUsers(this.props.database);
     this.fetchFollowingUsers(this.props.database);
+    this.listenForVote(this.props.database);
   }
 
   render(){
       return(
-        <TabContainer screenProps={{userVotes:this.state.userVotes,database:this.props.database,proposals:this.state.proposals,user:this.props.user,
-         categories:this.state.categories,following:this.state.following,users:this.state.users}}/>
+        <TabContainer screenProps={{userVotes:this.state.userVotes,database:this.props.database,proposals:this.state.proposals,user:this.props.user}}/>
       );
   }
 }

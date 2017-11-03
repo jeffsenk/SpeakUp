@@ -98,8 +98,13 @@ if(this.state.displayData.length>0){
     );
 }
     return(
-      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-        <Icon name='bullhorn' size={70} color='salmon'/>
+      <View style={{flex:1,justifyContent:'flex-start'}}>
+        <View style={styles.search}>
+          <SearchBar hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults} showOnLoad={true} />
+        </View>
+        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+          <Icon name='bullhorn' size={70} color='salmon'/>
+        </View>
       </View>
     );
   }
