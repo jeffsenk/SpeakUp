@@ -31,11 +31,10 @@ export default class App extends Component<{}> {
       dbUser:{}
     }
     console.ignoredYellowBox=['Setting a timer'];
-
   }
 
-  componentWillMount(){
-    firebase.auth().onAuthStateChanged(function(currentUser) {
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged(function(currentUser){
       if(currentUser){
         this.setState({
           authUser: currentUser

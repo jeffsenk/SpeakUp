@@ -7,9 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
-    "firebase": "^4.5.1",
+    "firebase": "^4.6.1",
     "react": "16.0.0-beta.5",
     "react-native": "0.49.3",
+    "react-native-facebook-login": "^1.6.0",
+    "react-native-fbsdk": "^0.6.3",
     "react-native-searchbar": "^1.13.0",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.15"

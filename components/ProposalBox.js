@@ -73,7 +73,7 @@ export default class ProposalBox extends Component<{}>{
     return(
       <View style={styles.outer}>
         <View style={styles.topRow}>
-          <Text>{this.props.proposal.val().Category} - {this.props.proposal.val().GroupName}</Text>
+          <Text>{this.props.proposal.val().Category} </Text>
           <IconButton onPress={this.props.onPressFollowing} source={followName} color={followColor}/> 
         </View>
         <TouchableHighlight underlayColor="white" onPress={this.onSelectProposal}>

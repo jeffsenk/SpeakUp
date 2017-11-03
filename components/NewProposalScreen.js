@@ -43,8 +43,6 @@ export default class NewProposalScreen extends Component<{}>{
     let props = this.props.screenProps;
     let newKey = props.database.ref('Proposals').push({
           Category:this.state.category,
-          GroupName:this.state.groupName,
-          Group:this.state.group,
           Name:this.state.name,
           Description:this.state.description,
           ArgumentPro:this.state.argumentPro,
@@ -69,6 +67,8 @@ export default class NewProposalScreen extends Component<{}>{
           <Picker.Item label="Politics" value="Politics"/>
           <Picker.Item label="Sports" value="Sports"/>
           <Picker.Item label="Tech" value="Tech"/>
+          <Picker.Item label="Movies" value="Movies"/>
+          <Picker.Item label="Music" value="Music"/>
         </Picker>
         </View>
         <Text style={styles.label} >Name</Text>
