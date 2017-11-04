@@ -53,7 +53,7 @@ export default class ProposalBox extends Component<{}>{
     if(this.props.proposal.val().DownVotes){
       downVotes = Object.keys(this.props.proposal.val().DownVotes).length;
     }
-    
+      
     if(this.props.proposal.val().CommentsPro){
       commentProCount = Object.keys(this.props.proposal.val().CommentsPro).length;
     }
