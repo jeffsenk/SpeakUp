@@ -58,7 +58,6 @@ export const TabContainer = TabNavigator({
   }
 },{
   tabBarPosition:'bottom',
-  animationEnabled:true,
   tabBarOptions:{
     showLabel:false,
     showIcon:true,

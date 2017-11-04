@@ -89,7 +89,7 @@ if(this.state.displayData.length>0){
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
-          <SearchBar hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults} showOnLoad={true} />
+          <SearchBar focusOnLayout={false} hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults} showOnLoad={true} />
         </View>
         <FlatList extraData={this.state} data={this.state.displayData}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} database={props.database}
@@ -100,7 +100,7 @@ if(this.state.displayData.length>0){
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
-          <SearchBar hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults} showOnLoad={true} />
+          <SearchBar focusOnLayout={false}  hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults} showOnLoad={true} />
         </View>
         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
           <Icon name='bullhorn' size={70} color='salmon'/>

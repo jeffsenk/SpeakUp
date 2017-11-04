@@ -87,7 +87,8 @@ export default class UserScreen extends Component<{}>{
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
-          <SearchBar hideBack={true}  data={this.state.simplifiedUsers} handleResults={this.handleSearchResults} showOnLoad={true}  />
+          <SearchBar focusOnLayout={false} hideBack={true}  data={this.state.simplifiedUsers} handleResults={this.handleSearchResults} showOnLoad={
+true} />
         </View>
         <Text style={styles.title}>Users</Text>
         <FlatList extraData={this.state} data={this.state.displayData}
