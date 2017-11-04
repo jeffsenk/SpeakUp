@@ -89,7 +89,8 @@ if(this.state.displayData.length>0){
     return(
       <View style={{flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
-          <SearchBar focusOnLayout={false} hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults} showOnLoad={true} />
+          <SearchBar focusOnLayout={false} hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults}
+          showOnLoad={true} />
         </View>
         <FlatList extraData={this.state} data={this.state.displayData}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} database={props.database}

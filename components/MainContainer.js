@@ -24,7 +24,7 @@ export default class MainContainer extends Component<{}>{
     this.props.user.child('Following/Users').ref.on('child_added',function(user){
       database.ref('Users/'+user.key+'/Proposals').once('value').then(function(proposals){
         proposals.forEach(function(proposal){
-          database.ref('Proposals/'+proposal.key).once('value').then(function(data){
+          database.ref('Proposals/'+proposal.key).on('value',function(data){
             let match = false;
             for(var i = 0;i<this.state.proposals.length;i++){
               if(this.state.proposals[i].key == data.key){
@@ -66,7 +66,7 @@ export default class MainContainer extends Component<{}>{
     subscribed.on('child_added',function(snapShot){
       database.ref('Categories/'+snapShot.key+'/Proposals').once('value').then(function(proposals){
         proposals.forEach(function(proposal){
-          database.ref('Proposals/'+proposal.key).once('value').then(function(data){
+          database.ref('Proposals/'+proposal.key).on('value',function(data){
             let match = false;
             for(var i = 0;i<this.state.proposals.length;i++){
               if(this.state.proposals[i].key == data.key){

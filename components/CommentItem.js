@@ -26,7 +26,9 @@ export default class CommentItem extends Component<{}>{
         <TouchableHighlight underlayColor="white" onPress={this.onPress}>
           <Text style={styles.user}>@{this.props.comment.val().AuthorName}</Text>
         </TouchableHighlight>
-        <Text>{this.props.comment.val().Content}</Text>
+        <View style={styles.comment}>
+          <Text numberOfLines={3}>{this.props.comment.val().Content}</Text>
+        </View>
       </View>
     );
   }
@@ -35,7 +37,11 @@ export default class CommentItem extends Component<{}>{
 const styles = StyleSheet.create({
   main:{
     flexDirection:'row',
-    flex:1
+    marginRight:10,
+    flexWrap:'wrap'
+  },
+  comment:{
+    marginRight:10
   },
   user:{
     color:'blue',

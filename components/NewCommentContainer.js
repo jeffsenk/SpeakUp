@@ -26,9 +26,9 @@ export default class NewCommentContainer extends Component<{}>{
     var sendIcon = 'paper-plane-o';
     return(
       <View style={styles.main}>
-        <TextInput placeholder="Type a message"  underlineColorAndroid={'transparent'} style={styles.input}
-         onChangeText={(text)=>this.setState({content:text})} value={this.state.content}/>
-        <View style={{justifyContent:'center',marginRight:10}}>
+          <TextInput placeholder="Type a message"  underlineColorAndroid={'transparent'} style={styles.input}
+           onChangeText={(text)=>this.setState({content:text})} value={this.state.content}/>
+        <View style={{width:50,justifyContent:'center',marginRight:10}}>
           <IconButton onPress={this.onSend} source={sendIcon}/>
         </View>
       </View>
@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
   input:{
     marginLeft:10,
     height:50,
-    width:200
+    width:300
   }
 });

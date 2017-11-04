@@ -69,7 +69,6 @@ export default class ProposalBox extends Component<{}>{
     
     const proPer = pro;
     const conPer = con;
-
     return(
       <View style={styles.outer}>
         <View style={styles.topRow}>
@@ -83,7 +82,7 @@ export default class ProposalBox extends Component<{}>{
           <View>
             <View style={{marginBottom:5,flexDirection:'row'}}>
               <IconButton onPress={this.props.onPressUpVote} source={upVoteName} color={upColor}/>
-              <Text style={{color:'cornflowerblue'}}>{proPer}% </Text>
+              <Text style={{color:'cornflowerblue',marginLeft:5}}>{proPer}% </Text>
             </View>
             <Text style={styles.votes}> {upVotes} UpVotes</Text>
             <TouchableHighlight underlayColor="white" onPress={this.onSelectProComments}>
@@ -92,7 +91,7 @@ export default class ProposalBox extends Component<{}>{
           </View>
           <View style={{marginRight:10}}>
             <View style={{marginBottom:5,flexDirection:'row',justifyContent:'flex-end'}}>
-              <Text style={{color:'salmon'}}>{conPer}% </Text>
+              <Text style={{color:'salmon',marginRight:5}}>{conPer}% </Text>
               <IconButton onPress={this.props.onPressDownVote} source={downVoteName} color={downColor}/>
             </View>
             <Text style={styles.votes} >{downVotes} DownVotes</Text>

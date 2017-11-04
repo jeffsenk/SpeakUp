@@ -13,7 +13,7 @@ export default class LogInBox extends Component<{}> {
 
   constructor(props){
     super(props);
-    this.state = {email:"",password:""}
+    this.state = {email:"",password:"",name:""}
     this.toggleSignIn = this.toggleSignIn.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
   }
@@ -44,12 +44,11 @@ export default class LogInBox extends Component<{}> {
     }else{
       this.props.auth.createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(user){
         this.props.database.ref('Users/'+user.uid).set(true);
-        this.props.database.ref('Users/'+user.uid+'/Name').set(this.state.email);
+        this.props.database.ref('Users/'+user.uid+'/Name').set(this.state.name);
         this.props.database.ref('Users/'+user.uid+'/email').set(this.state.email);
         this.props.database.ref('Users/'+user.uid+'/Following/Users/JrEg1g2It0ZkY0T0voOAuQLKwKA3').set(true);
         this.props.database.ref('Users/'+user.uid+'/Following/Categories/Sports').set(true);
         this.props.database.ref('Users/'+user.uid+'/Following/Categories/Politics').set(true);
-        this.props.database.ref('Users/'+user.uid+'/Following/Categories/Tech').set(true);
       }.bind(this),function(error){
         alert(error.message);
       });
@@ -60,6 +59,8 @@ export default class LogInBox extends Component<{}> {
     return (
       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
         <Text style={styles.title} >SpeakUp</Text>
+        <TextInput style={styles.input} value={this.state.name} onChangeText={(text)=>this.setState({name:text})}
+         placeholder="User Name (if first login)"/>
         <TextInput style={styles.input} value={this.state.email} onChangeText={(text)=>this.setState({email:text})} placeholder="Email"/>
         <TextInput style={styles.input} value={this.state.password} onChangeText={(text)=>this.setState({password:text})} placeholder="Password"/>
         <View style={styles.buttons}>
