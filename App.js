@@ -15,6 +15,7 @@ import {
 import firebase from './fire';
 import LogInScreen from './components/LogInScreen';
 import MainContainer from './components/MainContainer';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -28,7 +29,8 @@ export default class App extends Component<{}> {
     super(props);
     this.state={
       authUser: {},
-      dbUser:{}
+      dbUser:{},
+      loggedOut:false
     }
     console.ignoredYellowBox=['Setting a timer'];
   }
@@ -47,7 +49,8 @@ export default class App extends Component<{}> {
       }else{
         this.setState({
           authUser: {},
-          dbUser:{}
+          dbUser:{},
+          loggedOut:true
         });
       }
     }.bind(this));
@@ -56,12 +59,19 @@ export default class App extends Component<{}> {
   render() {
     if(this.state.dbUser.key){
       return(
-        <MainContainer user={this.state.dbUser} database={firebase.database()}/>
+        <MainContainer auth={firebase.auth()} user={this.state.dbUser} database={firebase.database()}/>
       );
     }
-    return (
-      <View style={styles.container}>
-        <LogInScreen database={firebase.database()} auth={firebase.auth()}/>
+    if(this.state.loggedOut){
+      return (
+        <View style={styles.container}>
+          <LogInScreen database={firebase.database()} auth={firebase.auth()}/>
+        </View>
+      );
+    }
+    return(
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <Icon name='bullhorn' size={70} color='salmon'/>
       </View>
     );
   }

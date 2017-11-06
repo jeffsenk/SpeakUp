@@ -41,6 +41,7 @@ export default class NewProposalScreen extends Component<{}>{
 
   onSubmit(){
     let props = this.props.screenProps;
+    if(this.state.name.length>0 && this.state.description.length>0 && this.state.argumentPro.length >0 && this.state.argumentCon.length>0){
     let newKey = props.database.ref('Proposals').push({
           Category:this.state.category,
           Name:this.state.name,
@@ -50,11 +51,18 @@ export default class NewProposalScreen extends Component<{}>{
           Submitter:props.user.key,
           SubmitterName:props.user.val().Name
     },function(err){
-      if(err){return onErr(err);}else{Alert.alert('Proposal Submitted!')};
+      if(err){
+       Alert.alert(err.message);
+      }else{
+       Alert.alert('Proposal Submitted!')
+      };
     }).key;
     props.database.ref('Categories/'+this.state.category+'/Proposals/'+newKey).set('true');
     props.database.ref('Users/'+props.user.key+'/Proposals/'+newKey).set('true');
     this.resetState();
+    }else{
+      Alert.alert('Please complete all fields');
+    }
   }
 
   render(){
@@ -83,6 +91,7 @@ export default class NewProposalScreen extends Component<{}>{
         <Text style={styles.label} >Argument Con</Text>
         <TextInput underlineColorAndroid={'transparent'} style={styles.bigInput}
          onChangeText={(text)=>this.setState({argumentCon:text})} value={this.state.argumentCon}/>
+        <Text style={{marginLeft:10,marginTop:20}}>Public: All Followers Can See Your Proposal </Text>
         <View style={styles.submit}>
           <Button onPress={this.onSubmit} title="Submit"/>
         </View>

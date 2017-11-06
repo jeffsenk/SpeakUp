@@ -127,7 +127,8 @@ export default class MainContainer extends Component<{}>{
 
   render(){
       return(
-        <TabContainer screenProps={{userVotes:this.state.userVotes,database:this.props.database,proposals:this.state.proposals,user:this.props.user}}/>
+        <TabContainer screenProps={{auth:this.props.auth,userVotes:this.state.userVotes,database:this.props.database,
+         proposals:this.state.proposals,user:this.props.user}}/>
       );
   }
 }

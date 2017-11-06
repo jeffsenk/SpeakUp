@@ -24,19 +24,19 @@ export const TabContainer = TabNavigator({
       )
     }),
   },
-  Categories:{
-    screen: CategoryScreen,
-    navigationOptions:({navigation})=>({
-      tabBarIcon:({tintColor})=>(
-        <Icon name='check' size={25} />
-      )
-    }),
-  },
   Following:{
     screen: FollowingContainer,
     navigationOptions:({navigation})=>({
       tabBarIcon:({tintColor})=>(
         <Icon name='star' size={25} />
+      )
+    }),
+  },
+  New:{
+    screen: NewProposalScreen,
+    navigationOptions:({navigation})=>({
+      tabBarIcon:({tintColor})=>(
+        <Icon name='plus' size={25} />
       )
     }),
   },
@@ -48,11 +48,11 @@ export const TabContainer = TabNavigator({
       )
     }),
   },
-  New:{
-    screen: NewProposalScreen,
+  Categories:{
+    screen: CategoryScreen,
     navigationOptions:({navigation})=>({
       tabBarIcon:({tintColor})=>(
-        <Icon name='plus' size={25} />
+        <Icon name='cog' size={25} />
       )
     }),
   }

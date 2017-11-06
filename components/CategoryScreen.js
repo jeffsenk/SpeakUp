@@ -3,6 +3,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  Button,
   Image,
   FlatList,
   View
@@ -22,6 +23,11 @@ export default class CategoryScreen extends Component<{}>{
       categories:[]
     }
     this.fetchCategories = this.fetchCategories.bind(this);
+    this.handleLogOut = this.handleLogOut.bind(this);
+  }
+
+  handleLogOut(){
+    this.props.screenProps.auth.signOut();
   }
 
   fetchCategories(database){
@@ -46,6 +52,11 @@ export default class CategoryScreen extends Component<{}>{
     const props = this.props.screenProps;
     return(
       <View style={styles.main}>
+        <Text style={{fontSize:25}}>Signed in as:</Text>
+        <Text style={{marginBottom:20}}>{props.user.val().Name}</Text>
+        <View style={{width:100}}>
+          <Button onPress={this.handleLogOut} title="Log Out"/>
+        </View>
         <Text style={styles.title}>Categories</Text>
         <FlatList style={{marginLeft:20}} extraData={this.state} data={this.state.categories}
          renderItem={({item})=>
