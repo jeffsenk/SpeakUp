@@ -45,6 +45,9 @@ export default class LogInBox extends Component<{}> {
         this.props.database.ref('Users/'+user.uid).set(true);
         this.props.database.ref('Users/'+user.uid+'/Name').set(this.state.name);
         this.props.database.ref('Users/'+user.uid+'/email').set(this.state.email);
+        this.props.database.ref('Users/'+user.uid+'/Age').set('');
+        this.props.database.ref('Users/'+user.uid+'/Gender').set('none');
+        this.props.database.ref('Users/'+user.uid+'/Income').set('');
         this.props.database.ref('Users/'+user.uid+'/Following/Users/JrEg1g2It0ZkY0T0voOAuQLKwKA3').set(true);
         this.props.database.ref('Users/'+user.uid+'/Following/Categories/Sports').set(true);
         this.props.database.ref('Users/'+user.uid+'/Following/Categories/Politics').set(true);

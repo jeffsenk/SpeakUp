@@ -63,7 +63,7 @@ export default class CategoryItem extends Component<{}>{
 const styles = StyleSheet.create({
   main:{
     flexDirection:'row',
-    marginBottom:40,
+    marginBottom:20,
     alignItems:'center'
   },
   label:{

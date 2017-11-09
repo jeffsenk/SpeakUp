@@ -33,6 +33,16 @@ export default class App extends Component<{}> {
       loggedOut:false
     }
     console.ignoredYellowBox=['Setting a timer'];
+    this.fetchLocation = this.fetchLocation.bind(this);
+  }
+
+  fetchLocation(userRef){
+    navigator.geolocation.getCurrentPosition(function(position){
+      userRef.child('Latitude').set(position.coords.latitude);    
+      userRef.child('Longitude').set(position.coords.longitude);    
+  },function(error){
+      console.log(error.message);
+    },{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
   }
 
   componentDidMount(){
@@ -45,6 +55,7 @@ export default class App extends Component<{}> {
         let userRef = database.ref('Users/'+currentUser.uid);
         userRef.on('value',function(snapShot){
           this.setState({dbUser:snapShot});
+          this.fetchLocation(userRef);
         }.bind(this));
       }else{
         this.setState({
