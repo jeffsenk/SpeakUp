@@ -32,7 +32,6 @@ export default class UserDetail extends Component<{}>{
         <Text style={styles.name}>{props.user.val().Name}</Text>
         <Text style={styles.stat}>Proposals: {proposalsCount} </Text>
         <Text style={styles.stat}>Votes: {voteCount} </Text>
-        <Text style={styles.stat}>Comments: {commentCount} </Text>
       </View>
     );
   }

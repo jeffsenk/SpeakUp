@@ -66,13 +66,18 @@ export default class ProposalBox extends Component<{}>{
      pro= ((upVotes/total)*100).toFixed(0);
      con= ((downVotes/total)*100).toFixed(0);
     }
+
+    var submitter = "";
+    if(this.props.proposal.val().SubmitterName != 'SpeakUp'){
+      submitter = ' - ' + this.props.proposal.val().SubmitterName;
+    }
     
     const proPer = pro;
     const conPer = con;
     return(
       <View style={styles.outer}>
         <View style={styles.topRow}>
-          <Text>{this.props.proposal.val().Category} </Text>
+          <Text>{this.props.proposal.val().Category} {submitter} </Text>
           <IconButton onPress={this.props.onPressFollowing} source={followName} color={followColor}/> 
         </View>
         <TouchableHighlight underlayColor="white" onPress={this.onSelectProposal}>
@@ -85,9 +90,6 @@ export default class ProposalBox extends Component<{}>{
               <Text style={{color:'cornflowerblue',marginLeft:5}}>{proPer}% </Text>
             </View>
             <Text style={styles.votes}> {upVotes} UpVotes</Text>
-            <TouchableHighlight underlayColor="white" onPress={this.onSelectProComments}>
-              <Text style={styles.comments}> View {commentProCount} Pro comments </Text>
-            </TouchableHighlight>
           </View>
           <View style={{marginRight:10}}>
             <View style={{marginBottom:5,flexDirection:'row',justifyContent:'flex-end'}}>
@@ -95,9 +97,6 @@ export default class ProposalBox extends Component<{}>{
               <IconButton onPress={this.props.onPressDownVote} source={downVoteName} color={downColor}/>
             </View>
             <Text style={styles.votes} >{downVotes} DownVotes</Text>
-            <TouchableHighlight underlayColor="white" onPress={this.onSelectConComments}>
-              <Text style={styles.comments}> View {commentConCount} Con comments </Text>
-            </TouchableHighlight>
           </View>
         </View>
       </View>
@@ -114,15 +113,6 @@ const styles = StyleSheet.create({
   },
   base:{
     color:'black'
-  },
-  politics:{
-    color:'salmon'
-  },
-  sports:{
-    color:'green'
-  },
-  tech:{
-    color:'cornflowerblue'
   },
   topRow:{
     height:30,
@@ -151,7 +141,7 @@ const styles = StyleSheet.create({
   },
   title:{
     height:60,
-    marginBottom:5,
+    marginBottom:10,
     fontSize:20
   }
 });
