@@ -48,6 +48,7 @@ export default class NewProposalScreen extends Component<{}>{
           Description:this.state.description,
           ArgumentPro:this.state.argumentPro,
           ArgumentCon:this.state.argumentCon,
+          TimeStamp:Date.now(),
           Submitter:props.user.key,
           SubmitterName:props.user.val().Name
     },function(err){
@@ -86,10 +87,10 @@ export default class NewProposalScreen extends Component<{}>{
         <TextInput multiline={true} underlineColorAndroid={'transparent'} style={styles.bigInput}
          onChangeText={(text)=>this.setState({description:text})} value={this.state.description}/>
         <Text style={styles.label} >Argument Pro</Text>
-        <TextInput underlineColorAndroid={'transparent'} style={styles.bigInput}
+        <TextInput multiline={true} underlineColorAndroid={'transparent'} style={styles.bigInput}
          onChangeText={(text)=>this.setState({argumentPro:text})} value={this.state.argumentPro}/>
         <Text style={styles.label} >Argument Con</Text>
-        <TextInput underlineColorAndroid={'transparent'} style={styles.bigInput}
+        <TextInput multiline={true} underlineColorAndroid={'transparent'} style={styles.bigInput}
          onChangeText={(text)=>this.setState({argumentCon:text})} value={this.state.argumentCon}/>
         <Text style={{marginLeft:10,marginTop:20}}>Public: All Followers Can See Your Proposal </Text>
         <View style={styles.submit}>

@@ -1,4 +1,4 @@
-package com.speakup;
+package com.speakupvoting;
 
 import com.facebook.react.ReactActivity;
 

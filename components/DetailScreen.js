@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     height:50
   },
   detail:{
-    height:540,
     marginTop:20,
     marginLeft:15,
     marginRight:15
