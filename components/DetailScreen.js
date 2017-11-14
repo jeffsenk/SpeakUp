@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import BackHeader from './BackHeader';
+import LinkButton from './LinkButton';
 
 export default class DetailScreen extends Component<{}>{
   constructor(props){
@@ -18,6 +19,15 @@ export default class DetailScreen extends Component<{}>{
   render(){
     var title = "Details";
     var props = this.props.navigation.state.params;
+    var proLink = "";
+    var conLink = "";
+    if(props.proposal.val().proLink){
+      proLink = props.proposal.val().proLink;
+    }
+    if(props.proposal.val().conLink){
+      conLink = props.proposal.val().conLink;
+    }
+
     return(
       <ScrollView>
         <View style={styles.detail}>
@@ -25,8 +35,10 @@ export default class DetailScreen extends Component<{}>{
           <Text style={styles.paragraph}>{props.proposal.val().Description}</Text>
           <Text style={styles.label}>Pro</Text>
           <Text style={styles.paragraph}>{props.proposal.val().ArgumentPro}</Text>
+          <LinkButton url={proLink}/>
           <Text style={styles.label}>Con</Text>
           <Text style={styles.paragraph}>{props.proposal.val().ArgumentCon}</Text>
+          <LinkButton url={conLink}/>
         </View>
       </ScrollView>
     );
