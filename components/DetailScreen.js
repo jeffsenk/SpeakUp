@@ -19,7 +19,7 @@ export default class DetailScreen extends Component<{}>{
     var title = "Details";
     var props = this.props.navigation.state.params;
     return(
-      <ScrollView>
+      <ScrollView style={{backgroundColor:'white'}}>
         <View style={styles.detail}>
           <Text style={styles.title}>{props.proposal.val().Name}</Text>
           <Text style={styles.paragraph}>{props.proposal.val().Description}</Text>

@@ -28,7 +28,7 @@ export default class UserDetail extends Component<{}>{
     }
 
     return(
-      <View>
+      <View style={{flex:1,backgroundColor:'white'}}>
         <Text style={styles.name}>{props.user.val().Name}</Text>
         <Text style={styles.stat}>Proposals: {proposalsCount} </Text>
         <Text style={styles.stat}>Votes: {voteCount} </Text>

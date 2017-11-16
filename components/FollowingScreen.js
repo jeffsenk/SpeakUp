@@ -73,7 +73,7 @@ export default class FollowingScreen extends Component<{}>{
     }
 
     return(
-      <View style={{flex:1,justifyContent:'flex-start'}}>
+      <View style={{backgroundColor:'white',flex:1,justifyContent:'flex-start'}}>
         <Text style={styles.title}>Following</Text>
         <FlatList extraData={this.state} data={this.state.following}
          renderItem={({item})=> <ProposalContainer userVotes={props.userVotes} user={props.user} database={props.database}
