@@ -85,7 +85,7 @@ export default class UserScreen extends Component<{}>{
     }.bind(this);
 
     return(
-      <View style={{flex:1,justifyContent:'flex-start'}}>
+      <View style={{backgroundColor:'white',flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
           <SearchBar focusOnLayout={false} hideBack={true}  data={this.state.simplifiedUsers} handleResults={this.handleSearchResults} showOnLoad={
 true} />

@@ -87,7 +87,7 @@ export default class FeedScreen extends Component<{}>{
     }.bind(this);
 if(this.state.displayData.length>0){
     return(
-      <View style={{flex:1,justifyContent:'flex-start'}}>
+      <View style={{backgroundColor:'white',flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
           <SearchBar focusOnLayout={false} hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults}
           showOnLoad={true} />
@@ -99,7 +99,7 @@ if(this.state.displayData.length>0){
     );
 }
     return(
-      <View style={{flex:1,justifyContent:'flex-start'}}>
+      <View style={{backgroundColor:'white',flex:1,justifyContent:'flex-start'}}>
         <View style={styles.search}>
           <SearchBar focusOnLayout={false}  hideBack={true}  data={this.state.simplifiedProposals} handleResults={this.handleSearchResults} showOnLoad={true} />
         </View>
