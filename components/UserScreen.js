@@ -101,6 +101,7 @@ true} />
 
 const styles = StyleSheet.create({
   search:{
+    marginBottom:15,
     marginLeft:10,
     marginRight:10,
     justifyContent:'space-between',
