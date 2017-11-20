@@ -113,6 +113,7 @@ if(this.state.displayData.length>0){
 
 const styles = StyleSheet.create({
   search:{
+    marginBottom:25,
     marginLeft:10,
     marginRight:10,
     justifyContent:'space-between',
