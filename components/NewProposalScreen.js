@@ -5,11 +5,11 @@ import {
   Text,
   TextInput,
   ScrollView,
-  Picker,
   Alert,
   Button,
   View
 } from 'react-native';
+import ModalPicker from 'react-native-modal-selector';
 
 export default class NewProposalScreen extends Component<{}>{
   constructor(props){
@@ -67,18 +67,20 @@ export default class NewProposalScreen extends Component<{}>{
   }
 
   render(){
+    const data = [
+      {key:0,label:'Politics'},
+      {key:1,label:'Sports'},
+      {key:2,label:'Tech'},
+      {key:3,label:'Movies'},
+      {key:4,label:'Music'}
+    ]
+
     return(
       <ScrollView style={{flex:1}}>
         <Text style={styles.title}>New Proposal</Text>
         <Text style={styles.label}>Category</Text>
-        <View style={styles.input}>
-        <Picker selectedValue={this.state.category} onValueChange={(itemValue,itemIndex)=>this.setState({category:itemValue})}>
-          <Picker.Item label="Politics" value="Politics"/>
-          <Picker.Item label="Sports" value="Sports"/>
-          <Picker.Item label="Tech" value="Tech"/>
-          <Picker.Item label="Movies" value="Movies"/>
-          <Picker.Item label="Music" value="Music"/>
-        </Picker>
+        <View style={styles.selector}>
+        <ModalPicker data={data} initValue='Select Category' onChange={(option)=>{this.setState({category:option.label})}} />
         </View>
         <Text style={styles.label} >Name</Text>
         <TextInput maxLength={60} underlineColorAndroid={'transparent'} style={styles.input}
@@ -121,6 +123,11 @@ const styles = StyleSheet.create({
     marginLeft:10,
     marginRight:30,
     height:80,
+  },
+  selector:{
+    marginLeft:10,
+    marginRight:30,
+    height:50
   },
   input:{
     borderWidth:1,
