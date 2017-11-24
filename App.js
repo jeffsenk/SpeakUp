@@ -16,6 +16,7 @@ import firebase from './fire';
 import LogInScreen from './components/LogInScreen';
 import MainContainer from './components/MainContainer';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import StatusBar from './components/StatusBar';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -70,7 +71,10 @@ export default class App extends Component<{}> {
   render() {
     if(this.state.dbUser.key){
       return(
+        <View style={{flex:1,backgroundColor:'white'}}>
+          <StatusBar/>
         <MainContainer auth={firebase.auth()} user={this.state.dbUser} database={firebase.database()}/>
+        </View>
       );
     }
     if(this.state.loggedOut){
