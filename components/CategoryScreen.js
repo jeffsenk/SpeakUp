@@ -9,11 +9,13 @@ import {
   TextInput,
   FlatList,
   ScrollView,
+  TouchableHighlight,
   View
 } from 'react-native';
 
 import CategoryItem from './CategoryItem';
 import IconButton from './IconButton';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class CategoryScreen extends Component<{}>{
   static navigationOptions={
@@ -80,35 +82,55 @@ export default class CategoryScreen extends Component<{}>{
 
   render(){
     const props = this.props.screenProps;
-    const fillColor = 'black';
-    var none = this.state.gender == 'none' ? 'check-square' : 'square-o';
-    var male = this.state.gender == 'male' ? 'check-square' : 'square-o';
-    var female = this.state.gender == 'female' ? 'check-square' : 'square-o';
+    var fillColor = 'black';
+    var none = this.state.gender == 'none' ? 'check' : 'square-o';
+    var noneColor = this.state.gender == 'none' ? '#2196f3' : 'white';
+    var male = this.state.gender == 'male' ? 'check' : 'square-o';
+    var maleColor = this.state.gender == 'male' ? '#2196f3' : 'white';
+    var female = this.state.gender == 'female' ? 'check' : 'square-o';
+    var femaleColor = this.state.gender == 'female' ? '#2196f3' : 'white';
 
     return(
       <ScrollView style={styles.main}>
-        <Text style={{fontSize:25}}>Signed in as:</Text>
-        <Text style={{marginBottom:20}}>{props.user.val().Name}</Text>
-        <View style={{width:100}}>
-          <Button onPress={this.handleLogOut} title="Log Out"/>
+        <View style={styles.titleView}>
+          <Text style={styles.title}>Categories</Text>
         </View>
-        <Text style={styles.title}>Categories</Text>
         <FlatList style={{marginLeft:20}} extraData={this.state} data={this.state.categories}
          renderItem={({item})=>
            <CategoryItem user={props.user} category={item} database={props.database} /> }/>
-        <Text style={styles.title}> Demographics </Text>
+        <View style={styles.titleView}>
+	  <Text style={styles.title}> Demographics </Text>
+        </View>
         <Text style={styles.subTitle}> Gender </Text>
         <View style={styles.option}>
-          <IconButton source={none} onPress={this.selectGender.bind(this,'none')} color={fillColor} />
-          <Text style={styles.label} >None</Text>
+          <TouchableHighlight onPress={this.selectGender.bind(this,'none')} underlayColor='white'>
+            <View style={{flexDirection:'row'}}>
+	      <View style={{width:40}}>
+		<Icon name={none} size={32} color={noneColor}/>
+	      </View>
+	      <Text style={styles.label} >None</Text>
+            </View>
+          </TouchableHighlight>
         </View>
         <View style={styles.option}>
-          <IconButton source={male} onPress={this.selectGender.bind(this,'male')} color={fillColor} />
-          <Text style={styles.label}>Male</Text>
+          <TouchableHighlight onPress={this.selectGender.bind(this,'male')} underlayColor='white'>
+            <View style={{flexDirection:'row'}}>
+	      <View style={{width:40}}>
+		<Icon name={male} size={32} color={maleColor}/>
+	      </View>
+	      <Text style={styles.label} >Male</Text>
+            </View>
+          </TouchableHighlight>
         </View>
         <View style={styles.option}>
-          <IconButton source={female} onPress={this.selectGender.bind(this,'female')} color={fillColor} />
-          <Text style={styles.label}>Female</Text>
+          <TouchableHighlight onPress={this.selectGender.bind(this,'female')} underlayColor='white'>
+            <View style={{flexDirection:'row'}}>
+	      <View style={{width:40}}>
+		<Icon name={female} size={32} color={femaleColor}/>
+	      </View>
+	      <Text style={styles.label} >Female</Text>
+            </View>
+          </TouchableHighlight>
         </View>
         <Text style={styles.subTitle}>Age </Text>
         <View style={styles.option}>
@@ -121,6 +143,11 @@ export default class CategoryScreen extends Component<{}>{
            onChangeText={(text)=>this.selectIncome(text)} value={this.state.income}/>
           <Text style={styles.label} > (in Thousands $) </Text>
         </View>
+        <Text style={{fontSize:25,marginTop:20}}>Signed in as:</Text>
+        <Text style={{marginBottom:20}}>{props.user.val().Name}</Text>
+        <View style={{width:100,marginBottom:50}}>
+          <Button onPress={this.handleLogOut} title="Log Out"/>
+        </View>
       </ScrollView>
     );
   }
@@ -131,10 +158,15 @@ const styles = StyleSheet.create({
     marginLeft:10,
     flex:1,
   },
-  title:{
+  titleView:{
     marginTop:10,
-    marginBottom:30,
-    fontSize:25
+    marginBottom:20,
+    borderBottomWidth:1,
+    borderBottomColor:'lightgray'
+  },
+  title:{
+    fontSize:25,
+    marginBottom:10
   },
   subTitle:{
     marginBottom:10,

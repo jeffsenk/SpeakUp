@@ -3,10 +3,12 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View
 } from 'react-native';
 
 import IconButton from './IconButton';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class CategoryItem extends Component<{}>{
   constructor(props){
@@ -49,22 +51,24 @@ export default class CategoryItem extends Component<{}>{
   }
 
   render(){
-    var followIcon = this.state.subscribed ? 'check-square' : 'square-o';
-    var followColor = 'black';
+    var followIcon = this.state.subscribed ? 'check' : 'square-o';
+    var followColor = this.state.subscribed ? '#2196f3' : 'white';
     return(
-      <View style={styles.main}>
-        <IconButton onPress={this.onPressSubscribe} source={followIcon} color={followColor}/>
-        <Text style={styles.label} >{this.props.category.key}</Text>
-      </View>
+        <TouchableHighlight style={styles.main} underlayColor='white' onPress={this.onPressSubscribe}>
+          <View style={{flexDirection:'row'}}>
+            <View style={{width:40}}>
+	      <Icon name={followIcon} size={32} color={followColor}/>
+            </View>
+	    <Text style={styles.label} >{this.props.category.key}</Text>
+          </View>
+        </TouchableHighlight>
     );
   }
 }
 
 const styles = StyleSheet.create({
   main:{
-    flexDirection:'row',
     marginBottom:20,
-    alignItems:'center'
   },
   label:{
     marginLeft:10,

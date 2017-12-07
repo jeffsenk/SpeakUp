@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     borderBottomWidth:1
   },
   title:{
+    textDecorationLine:'underline',
     height:60,
     marginBottom:10,
     fontSize:20

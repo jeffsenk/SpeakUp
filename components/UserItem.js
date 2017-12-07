@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  Button,
   View
 } from 'react-native';
 import IconButton from './IconButton';
@@ -54,15 +55,17 @@ export default class UserItem extends Component<{}>{
   }
 
   render(){
-    var followIcon = this.state.subscribed ? 'check-square' : 'square-o';
-    var followColor = 'black';
+    var title = this.state.subscribed ? 'Following' : 'Follow';
+    var color = this.state.subscribed ? 'lightgray' : '#2196f3';
 
     return(
       <View style={styles.user}>
         <TouchableHighlight underlayColor="white" onPress={this.onPress}>
           <Text style={styles.text}>@{this.props.user.val().Name}</Text>
         </TouchableHighlight>
-        <IconButton onPress={this.onPressSubscribe} source={followIcon} color={followColor}/>
+        <View style={{width:100}}>
+          <Button onPress={this.onPressSubscribe} title={title} color={color} />
+        </View>
       </View>
     );
   }
