@@ -10,6 +10,7 @@ import {
   View
 } from 'react-native';
 import ModalPicker from 'react-native-modal-selector';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default class NewProposalScreen extends Component<{}>{
   constructor(props){
@@ -76,7 +77,7 @@ export default class NewProposalScreen extends Component<{}>{
     ]
 
     return(
-      <ScrollView style={{flex:1}}>
+      <KeyboardAwareScrollView style={{backgroundColor:'white'}} resetScrollToCords={{x:0,y:0}} contentContainerStyle={styles.container} scrollEnabled={true}>
         <Text style={styles.title}>New Proposal</Text>
         <Text style={styles.label}>Category</Text>
         <View style={styles.selector}>
@@ -98,7 +99,7 @@ export default class NewProposalScreen extends Component<{}>{
         <View style={styles.submit}>
           <Button onPress={this.onSubmit} title="Submit"/>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 

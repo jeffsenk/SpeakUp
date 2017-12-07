@@ -66,7 +66,7 @@ export default class FollowingScreen extends Component<{}>{
 
     if(this.state.following.length ==0 ){
       return(
-        <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+        <View style={{backgroundColor:'white',flex:1,alignItems:'center',justifyContent:'center'}}>
           <Text style={{fontSize:15}}> You are not currently following any Proposals </Text>
         </View>
       );
